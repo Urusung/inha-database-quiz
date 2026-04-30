@@ -64,6 +64,7 @@ header .pool-info { margin-top: 8px; font-size: 11px; opacity: 0.85; }
 }
 .question-card.answered-correct { border-color: #10b981; }
 .question-card.answered-wrong { border-color: #ef4444; }
+.question-card.answered-review { border-color: #f59e0b; }
 
 .q-header { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
 .q-num { background: #ecfeff; color: #0f766e; font-weight: 700; padding: 3px 10px; border-radius: 6px; font-size: 13px; }
@@ -72,6 +73,7 @@ header .pool-info { margin-top: 8px; font-size: 11px; opacity: 0.85; }
 .q-tag.type-multi { background: #ede9fe; color: #5b21b6; }
 .q-tag.type-ox { background: #dbeafe; color: #1e40af; }
 .q-tag.type-short { background: #fef3c7; color: #92400e; }
+.q-tag.type-essay { background: #ffedd5; color: #9a3412; }
 
 .q-text { font-size: 15px; font-weight: 500; margin: 0 0 14px; color: #111827; white-space: pre-wrap; }
 .q-text code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-family: 'D2Coding', Menlo, Consolas, monospace; font-size: 13px; color: #be185d; }
@@ -120,13 +122,21 @@ header .pool-info { margin-top: 8px; font-size: 11px; opacity: 0.85; }
 .short-input:focus { border-color: #0ea5e9; background: white; }
 .short-input.correct { border-color: #10b981; background: #ecfdf5; }
 .short-input.wrong { border-color: #ef4444; background: #fef2f2; }
-.short-submit, .multi-submit {
+.essay-input {
+  width: 100%; min-height: 128px; resize: vertical;
+  padding: 12px 14px; border: 1.5px solid #e5e7eb; border-radius: 10px;
+  font-size: 14px; font-family: inherit; outline: none; background: #fafafa;
+}
+.essay-input:focus { border-color: #0ea5e9; background: white; }
+.essay-input.reviewed { border-color: #f59e0b; background: #fffbeb; }
+.short-submit, .multi-submit, .essay-submit {
   padding: 10px 18px; border-radius: 10px; border: none;
   background: #0ea5e9; color: white; font-weight: 700; font-size: 14px; cursor: pointer;
 }
-.short-submit:hover, .multi-submit:hover { background: #0284c7; }
-.short-submit:disabled, .multi-submit:disabled { background: #94a3b8; cursor: default; }
+.short-submit:hover, .multi-submit:hover, .essay-submit:hover { background: #0284c7; }
+.short-submit:disabled, .multi-submit:disabled, .essay-submit:disabled { background: #94a3b8; cursor: default; }
 .multi-submit { margin-top: 9px; }
+.essay-submit { margin-top: 9px; }
 
 .explain {
   margin-top: 12px; padding: 11px 13px; background: #fefce8;
@@ -136,6 +146,14 @@ header .pool-info { margin-top: 8px; font-size: 11px; opacity: 0.85; }
 .explain.show { display: block; }
 .explain-label { font-weight: 700; margin-right: 6px; color: #a16207; }
 .explain .ans-line { display: block; margin-top: 4px; font-weight: 600; color: #422006; }
+.answer-diagram {
+  margin-top: 10px; padding: 10px; background: #fff;
+  border: 1px solid #fde68a; border-radius: 8px; overflow-x: auto;
+}
+.answer-diagram svg {
+  display: block; width: 100%; min-width: 520px; max-width: 650px;
+  height: auto; margin: 0 auto;
+}
 
 .controls {
   display: flex; gap: 10px; justify-content: center;
@@ -194,7 +212,8 @@ footer { text-align: center; margin-top: 30px; font-size: 11px; color: #9ca3af; 
 
   .short-row { flex-wrap: wrap; gap: 8px; }
   .short-input { flex: 1 1 100%; padding: 10px 12px; font-size: 16px; }
-  .short-submit, .multi-submit { flex: 1 1 100%; padding: 10px; font-size: 14px; }
+  .essay-input { min-height: 150px; font-size: 16px; }
+  .short-submit, .multi-submit, .essay-submit { flex: 1 1 100%; padding: 10px; font-size: 14px; }
 
   .explain { padding: 10px 11px; font-size: 12.5px; }
 
@@ -212,7 +231,7 @@ footer { text-align: center; margin-top: 30px; font-size: 11px; color: #9ca3af; 
 <div class="container">
   <header>
     <h1>🗄️ 데이터베이스 문제은행</h1>
-    <p>체크문제 1~6 · 강의 슬라이드 1~6강 · 객관식 / 복수선택 / OX / 단답형</p>
+    <p>체크문제 1~6 · 강의 슬라이드 1~6강 · 예상 대비 · 객관식 / 복수선택 / OX / 단답형 / 서술형</p>
     <div class="pool-info" id="pool-info"></div>
   </header>
 
@@ -1906,6 +1925,24 @@ const LECTURE_POOL = [
     explanation: "관계는 개체 집합들 사이의 대응 관계, 즉 매핑을 의미한다."
   },
   {
+    id: "l4-013",
+    chapter: "4",
+    source: "4강 슬라이드",
+    type: "essay",
+    question: "약한 개체와 강한 개체를 구분해 설명하고, 약한 개체의 주요 특징을 서술하시오.",
+    answer: "약한 개체는 다른 개체의 존재 여부에 의존적인 개체이고, 강한 개체는 다른 개체의 존재 여부를 결정하는 개체이다. 강한 개체와 약한 개체는 일반적으로 일대다 관계이며, 약한 개체는 강한 개체와의 관계에 필수적으로 참여한다. 또한 약한 개체는 자신의 키를 구성할 때 강한 개체의 키를 포함한다.",
+    explanation: "핵심어: 존재 의존, 강한 개체가 존재 결정, 일대다 관계, 약한 개체의 필수 참여, 강한 개체의 키 포함."
+  },
+  {
+    id: "l4-014",
+    chapter: "4",
+    source: "4강 슬라이드",
+    type: "essay",
+    question: "E-R 다이어그램에서 관계 종속성을 어떻게 표현하는지 설명하고, 직원-부양가족 예시에서 어느 쪽이 강한 개체와 약한 개체인지 쓰시오.",
+    answer: "E-R 다이어그램에서 약한 개체는 이중 사각형으로 표현하고, 약한 개체가 강한 개체와 맺는 관계는 이중 마름모로 표현한다. 직원-부양가족 예시에서는 직원 개체가 강한 개체이고 부양가족 개체가 약한 개체이다. 부양가족은 직원의 존재에 의존하므로 직원 없이는 독립적으로 식별되기 어렵다.",
+    explanation: "핵심어: 약한 개체 이중 사각형, 관계 이중 마름모, 직원은 강한 개체, 부양가족은 약한 개체."
+  },
+  {
     id: "l5-001",
     chapter: "5",
     source: "5강 슬라이드",
@@ -2244,14 +2281,91 @@ const LECTURE_POOL = [
     explanation: "개념적 설계 단계의 결과물은 개념적 스키마이며, 일반적으로 E-R 다이어그램으로 표현한다."
   }
 ];
+const EXTRA_POOL = [
+  {
+    id: "e7-001",
+    chapter: "7",
+    source: "정규화 예상",
+    type: "choice",
+    question: "일반적인 정규화 단계의 순서로 가장 적절한 것은?",
+    choices: [
+      "제1정규형 → 제2정규형 → 제3정규형 → BCNF → 제4정규형 → 제5정규형",
+      "제1정규형 → 제3정규형 → 제2정규형 → BCNF → 제4정규형 → 제5정규형",
+      "제2정규형 → 제1정규형 → BCNF → 제3정규형 → 제4정규형 → 제5정규형",
+      "BCNF → 제1정규형 → 제2정규형 → 제3정규형 → 제4정규형 → 제5정규형"
+    ],
+    answer: 0,
+    explanation: "정규화는 보통 1NF, 2NF, 3NF, BCNF, 4NF, 5NF 순서로 조건을 강화한다."
+  },
+  {
+    id: "e7-002",
+    chapter: "7",
+    source: "정규화 예상",
+    type: "choice",
+    question: "BCNF를 제3정규형과 제4정규형 사이의 별도 단계로 포함해 세면, 일반적인 정규화 단계는 총 몇 단계인가?",
+    choices: [
+      "6단계",
+      "5단계",
+      "4단계",
+      "3단계"
+    ],
+    answer: 0,
+    explanation: "1NF, 2NF, 3NF, BCNF, 4NF, 5NF로 세면 총 6개 단계다. 다만 이름은 제5정규형까지 이어진다."
+  },
+  {
+    id: "e7-003",
+    chapter: "7",
+    source: "정규화 예상",
+    type: "short",
+    question: "제3정규형보다 강한 조건으로, 모든 결정자가 후보키가 되도록 하는 정규형은?",
+    answer: "BCNF",
+    alts: ["보이스-코드 정규형", "보이스 코드 정규형", "Boyce-Codd Normal Form", "Boyce Codd Normal Form"],
+    explanation: "BCNF(Boyce-Codd Normal Form)는 모든 결정자가 후보키여야 한다는 조건을 요구한다."
+  },
+  {
+    id: "e7-004",
+    chapter: "7",
+    source: "정규화 예상",
+    type: "multi",
+    question: "정규화 단계에 대한 설명으로 옳은 것을 모두 고르시오.",
+    choices: [
+      "제1정규형은 반복 그룹을 없애고 속성값을 원자값으로 만든다.",
+      "제2정규형은 부분 함수 종속을 제거하는 단계다.",
+      "제3정규형은 이행 함수 종속을 제거하는 단계다.",
+      "BCNF는 모든 결정자가 후보키일 필요가 없다는 단계다."
+    ],
+    answer: [0, 1, 2],
+    explanation: "BCNF는 모든 결정자가 후보키여야 한다. 나머지 세 설명은 각각 1NF, 2NF, 3NF의 핵심 조건이다."
+  },
+  {
+    id: "e7-005",
+    chapter: "7",
+    source: "정규화 예상",
+    type: "essay",
+    question: "정규화 단계의 순서와 각 단계에서 제거하거나 만족해야 하는 핵심 조건을 서술하시오.",
+    answer: "1NF → 2NF → 3NF → BCNF → 4NF → 5NF. 1NF는 속성값을 원자값으로 만들고 반복 그룹을 제거한다. 2NF는 부분 함수 종속을 제거해 기본키 전체에 완전 함수 종속되게 한다. 3NF는 이행 함수 종속을 제거한다. BCNF는 모든 결정자가 후보키가 되게 한다. 4NF는 다치 종속, 5NF는 조인 종속 문제를 제거한다.",
+    explanation: "서술형에서는 순서와 단계별 핵심 키워드인 원자값, 부분 함수 종속, 이행 함수 종속, 결정자/후보키, 다치 종속, 조인 종속을 함께 적으면 안전하다."
+  },
+  {
+    id: "e4-001",
+    chapter: "4",
+    source: "ERD 그리기 예상",
+    type: "essay",
+    question: "학생, 교수, 과목에 대한 E-R 다이어그램을 그리시오. 학생은 학번과 이름을 가지고, 교수는 교번과 이름을 가지며, 과목은 과목번호와 과목명을 가진다. 학생은 교수의 지도를 받고, 학생은 과목을 수강하며 수강 관계에는 성적이 있다. 교수는 과목을 강의한다.",
+    answer: "개체는 학생, 교수, 과목을 사각형으로 그린다. 학생의 속성은 학번(기본키), 이름이고 교수의 속성은 교번(기본키), 이름이며 과목의 속성은 과목번호(기본키), 과목명이다. 관계는 학생-교수 사이에 지도 관계를 두고 학생 쪽 n, 교수 쪽 1로 표시한다. 학생-과목 사이에는 수강 관계를 두고 n:m으로 표시하며 관계 속성 성적을 수강 마름모에 연결한다. 교수-과목 사이에는 강의 관계를 두고 교수 쪽 1, 과목 쪽 n으로 표시한다.",
+    explanation: "그림형 문제에서는 개체 3개, 기본키 밑줄, 관계 3개, 카디널리티, 그리고 수강 관계의 속성 성적을 빠뜨리지 않는 것이 핵심이다.",
+    diagram: "studentProfessorCourseErd"
+  }
+];
 const POOL = [
   ...CHECK_POOL.map(q => ({ bank: "check", ...q })),
-  ...LECTURE_POOL.map(q => ({ bank: "lecture", ...q }))
+  ...LECTURE_POOL.map(q => ({ bank: "lecture", ...q })),
+  ...EXTRA_POOL.map(q => ({ bank: "extra", ...q }))
 ];
-const TYPE_LABEL = { choice: '객관식', multi: '복수선택', ox: 'OX', short: '단답형' };
-const TYPE_ORDER = ['choice', 'multi', 'ox', 'short'];
-const SOURCE_LABEL = { all: '전체 자료', check: '체크문제', lecture: '강의 슬라이드' };
-const SOURCE_ORDER = ['check', 'lecture'];
+const TYPE_LABEL = { choice: '객관식', multi: '복수선택', ox: 'OX', short: '단답형', essay: '서술형' };
+const TYPE_ORDER = ['choice', 'multi', 'ox', 'short', 'essay'];
+const SOURCE_LABEL = { all: '전체 자료', check: '체크문제', lecture: '강의 슬라이드', extra: '예상 대비' };
+const SOURCE_ORDER = ['check', 'lecture', 'extra'];
 const CHAPTERS = [...new Set(POOL.map(q => q.chapter))].sort((a, b) => Number(a) - Number(b));
 
 function shuffle(arr) {
@@ -2268,6 +2382,7 @@ function normalize(s) {
 }
 function typeLabel(type) { return TYPE_LABEL[type] || type; }
 function typeClass(type) { return 'type-' + type; }
+function isAutoGraded(q) { return q.type !== 'essay'; }
 
 const state = {
   questions: [],
@@ -2345,6 +2460,80 @@ function answerText(q) {
   return q.answer;
 }
 
+function renderDiagram(name) {
+  if (name !== 'studentProfessorCourseErd') return '';
+  return `
+    <div class="answer-diagram" role="img" aria-label="학생, 교수, 과목 E-R 다이어그램 정답 예시">
+      <svg viewBox="0 0 720 430" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <style>
+            .erd-line { stroke: #94a3b8; stroke-width: 2; fill: none; }
+            .erd-entity { fill: #fef08a; stroke: #ca8a04; stroke-width: 2; }
+            .erd-relation { fill: #facc15; stroke: #ca8a04; stroke-width: 2; }
+            .erd-attr { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 2; }
+            .erd-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif; font-size: 15px; fill: #1f2937; text-anchor: middle; dominant-baseline: middle; font-weight: 700; }
+            .erd-small { font-size: 13px; font-weight: 600; fill: #475569; }
+            .erd-card { font-size: 16px; font-weight: 800; fill: #0f172a; }
+            .erd-pk { text-decoration: underline; }
+          </style>
+        </defs>
+
+        <line class="erd-line" x1="196" y1="94" x2="310" y2="94"/>
+        <line class="erd-line" x1="410" y1="94" x2="524" y2="94"/>
+        <line class="erd-line" x1="166" y1="112" x2="200" y2="208"/>
+        <line class="erd-line" x1="260" y1="258" x2="335" y2="315"/>
+        <line class="erd-line" x1="554" y1="112" x2="520" y2="208"/>
+        <line class="erd-line" x1="460" y1="258" x2="385" y2="315"/>
+        <line class="erd-line" x1="134" y1="94" x2="96" y2="52"/>
+        <line class="erd-line" x1="134" y1="94" x2="96" y2="136"/>
+        <line class="erd-line" x1="586" y1="94" x2="624" y2="52"/>
+        <line class="erd-line" x1="586" y1="94" x2="624" y2="136"/>
+        <line class="erd-line" x1="360" y1="348" x2="286" y2="385"/>
+        <line class="erd-line" x1="360" y1="348" x2="434" y2="385"/>
+        <line class="erd-line" x1="230" y1="265" x2="166" y2="300"/>
+
+        <ellipse class="erd-attr" cx="70" cy="48" rx="48" ry="24"/>
+        <text class="erd-text erd-small erd-pk" x="70" y="48">학번</text>
+        <ellipse class="erd-attr" cx="70" cy="140" rx="48" ry="24"/>
+        <text class="erd-text erd-small" x="70" y="140">이름</text>
+
+        <ellipse class="erd-attr" cx="650" cy="48" rx="48" ry="24"/>
+        <text class="erd-text erd-small erd-pk" x="650" y="48">교번</text>
+        <ellipse class="erd-attr" cx="650" cy="140" rx="48" ry="24"/>
+        <text class="erd-text erd-small" x="650" y="140">이름</text>
+
+        <ellipse class="erd-attr" cx="260" cy="392" rx="56" ry="24"/>
+        <text class="erd-text erd-small erd-pk" x="260" y="392">과목번호</text>
+        <ellipse class="erd-attr" cx="460" cy="392" rx="56" ry="24"/>
+        <text class="erd-text erd-small" x="460" y="392">과목명</text>
+
+        <rect class="erd-entity" x="134" y="76" width="62" height="36"/>
+        <text class="erd-text" x="165" y="94">학생</text>
+        <rect class="erd-entity" x="524" y="76" width="62" height="36"/>
+        <text class="erd-text" x="555" y="94">교수</text>
+        <rect class="erd-entity" x="330" y="312" width="60" height="36"/>
+        <text class="erd-text" x="360" y="330">과목</text>
+
+        <polygon class="erd-relation" points="360,64 410,94 360,124 310,94"/>
+        <text class="erd-text" x="360" y="94">지도</text>
+        <polygon class="erd-relation" points="230,204 280,234 230,264 180,234"/>
+        <text class="erd-text" x="230" y="234">수강</text>
+        <polygon class="erd-relation" points="490,204 540,234 490,264 440,234"/>
+        <text class="erd-text" x="490" y="234">강의</text>
+
+        <ellipse class="erd-attr" cx="140" cy="312" rx="42" ry="22"/>
+        <text class="erd-text erd-small" x="140" y="312">성적</text>
+
+        <text class="erd-text erd-card" x="250" y="82">n</text>
+        <text class="erd-text erd-card" x="470" y="82">1</text>
+        <text class="erd-text erd-card" x="177" y="170">n</text>
+        <text class="erd-text erd-card" x="305" y="286">m</text>
+        <text class="erd-text erd-card" x="543" y="170">1</text>
+        <text class="erd-text erd-card" x="415" y="286">n</text>
+      </svg>
+    </div>`;
+}
+
 function render() {
   const container = document.getElementById('quiz-container');
   if (!state.questions.length) {
@@ -2356,7 +2545,9 @@ function render() {
   container.innerHTML = state.questions.map((q, i) => {
     const revealed = !!state.revealed[i];
     const correct = !!state.correct[i];
-    const cardClass = revealed ? (correct ? 'answered-correct' : 'answered-wrong') : '';
+    const cardClass = revealed
+      ? (q.type === 'essay' ? 'answered-review' : (correct ? 'answered-correct' : 'answered-wrong'))
+      : '';
 
     let body = '';
     if (q.type === 'choice') {
@@ -2385,20 +2576,26 @@ function render() {
         return `<button class="${cls}" data-qi="${i}" data-ox="${value}">${value}</button>`;
       };
       body = `<div class="ox-choices">${mk('O')}${mk('X')}</div>`;
-    } else {
+    } else if (q.type === 'short') {
       const value = state.answers[i] ?? '';
       const inputClass = revealed ? (correct ? 'correct' : 'wrong') : '';
       body = `<div class="short-row">
         <input type="text" class="short-input ${inputClass}" data-qi="${i}" value="${escapeHtml(value)}" placeholder="답을 입력하고 Enter 또는 제출" ${revealed ? 'disabled' : ''}>
         <button class="short-submit" data-qi="${i}" ${revealed ? 'disabled' : ''}>제출</button>
       </div>`;
+    } else if (q.type === 'essay') {
+      const value = state.answers[i] ?? '';
+      const inputClass = revealed ? 'reviewed' : '';
+      body = `<textarea class="essay-input ${inputClass}" data-qi="${i}" placeholder="답안을 작성하고 모범답안을 확인하세요." ${revealed ? 'disabled' : ''}>${escapeHtml(value)}</textarea>
+        <button class="essay-submit" data-qi="${i}" ${revealed ? 'disabled' : ''}>모범답안 확인</button>`;
     }
 
     const explain = revealed ? `
       <div class="explain show">
-        <span class="explain-label">${correct ? '✅ 정답!' : '❌ 오답'}</span>
+        <span class="explain-label">${q.type === 'essay' ? '모범답안' : (correct ? '✅ 정답!' : '❌ 오답')}</span>
         ${escapeHtml(q.explanation || '')}
-        <span class="ans-line">📖 정답: ${escapeHtml(answerText(q))}</span>
+        <span class="ans-line">${q.type === 'essay' ? '모범답안' : '📖 정답'}: ${escapeHtml(answerText(q))}</span>
+        ${renderDiagram(q.diagram)}
       </div>` : '';
 
     return `
@@ -2485,6 +2682,18 @@ function render() {
     btn.addEventListener('click', () => submitShort(Number(btn.dataset.qi)));
   });
 
+  container.querySelectorAll('.essay-input').forEach(input => {
+    if (input.disabled) return;
+    input.addEventListener('input', () => {
+      state.answers[Number(input.dataset.qi)] = input.value;
+    });
+  });
+
+  container.querySelectorAll('.essay-submit').forEach(btn => {
+    if (btn.disabled) return;
+    btn.addEventListener('click', () => submitEssay(Number(btn.dataset.qi)));
+  });
+
   updateProgress();
 }
 
@@ -2495,10 +2704,19 @@ function submitShort(qi) {
   render();
 }
 
+function submitEssay(qi) {
+  state.revealed[qi] = true;
+  state.correct[qi] = null;
+  render();
+}
+
 function updateProgress() {
   const total = state.questions.length;
   const answered = Object.keys(state.revealed).length;
-  const correct = Object.values(state.correct).filter(Boolean).length;
+  const correct = state.questions
+    .map((q, i) => ({ q, i }))
+    .filter(x => isAutoGraded(x.q) && state.correct[x.i] === true)
+    .length;
   document.getElementById('progress-text').textContent = `${answered} / ${total}`;
   document.getElementById('progress-fill').style.width = total ? `${(answered / total) * 100}%` : '0%';
   document.getElementById('score-badge').textContent = `정답 ${correct}`;
@@ -2566,7 +2784,8 @@ function renderPoolInfo() {
   const selected = currentPool();
   const byBank = (bank) => POOL.filter(q => q.bank === bank).length;
   const byType = (type) => selected.filter(q => q.type === type).length;
-  info.textContent = `문제 풀: 전체 ${POOL.length}문제 (체크문제 ${byBank('check')} / 강의 슬라이드 ${byBank('lecture')}) · 현재 ${SOURCE_LABEL[state.sourceFilter]} ${selected.length}문제 (객관식 ${byType('choice')} / 복수선택 ${byType('multi')} / OX ${byType('ox')} / 단답형 ${byType('short')})`;
+  const sourceCounts = SOURCE_ORDER.map(source => `${SOURCE_LABEL[source]} ${byBank(source)}`).join(' / ');
+  info.textContent = `문제 풀: 전체 ${POOL.length}문제 (${sourceCounts}) · 현재 ${SOURCE_LABEL[state.sourceFilter]} ${selected.length}문제 (객관식 ${byType('choice')} / 복수선택 ${byType('multi')} / OX ${byType('ox')} / 단답형 ${byType('short')} / 서술형 ${byType('essay')})`;
 }
 
 function hasProgress() {
@@ -2585,14 +2804,22 @@ document.getElementById('mode-bar').addEventListener('click', (event) => {
 document.getElementById('submit-btn').addEventListener('click', () => {
   const total = state.questions.length;
   const answered = Object.keys(state.revealed).length;
-  const correct = Object.values(state.correct).filter(Boolean).length;
-  const percent = total ? Math.round((correct / total) * 100) : 0;
+  const entries = state.questions.map((q, i) => ({ q, i }));
+  const autoGraded = entries.filter(x => isAutoGraded(x.q));
+  const essayItems = entries.filter(x => x.q.type === 'essay');
+  const correct = autoGraded.filter(x => state.correct[x.i] === true).length;
+  const reviewedEssays = essayItems.filter(x => state.revealed[x.i]).length;
+  const percent = autoGraded.length ? Math.round((correct / autoGraded.length) * 100) : 0;
+  const essayDetail = essayItems.length ? ` · 서술형 확인 ${reviewedEssays}/${essayItems.length}` : '';
 
-  document.getElementById('result-score').textContent = `${correct} / ${total}`;
-  document.getElementById('result-detail').textContent = `채점 완료 ${answered}/${total}문항 · 정답률 ${percent}%`;
+  document.getElementById('result-score').textContent = autoGraded.length ? `${correct} / ${autoGraded.length}` : `서술형 ${reviewedEssays} / ${essayItems.length}`;
+  document.getElementById('result-detail').textContent = autoGraded.length
+    ? `채점 완료 ${answered}/${total}문항 · 자동채점 정답률 ${percent}%${essayDetail}`
+    : `모범답안 확인 ${reviewedEssays}/${essayItems.length}문항`;
 
   let msg;
-  if (percent >= 90) msg = '핵심 개념이 안정적으로 잡혀 있습니다.';
+  if (!autoGraded.length) msg = '서술형은 모범답안의 핵심어와 본인 답안을 직접 대조하세요.';
+  else if (percent >= 90) msg = '핵심 개념이 안정적으로 잡혀 있습니다.';
   else if (percent >= 75) msg = '오답 문항의 용어 구분만 다시 확인하세요.';
   else if (percent >= 60) msg = '장별 필터로 약한 범위를 따로 반복하는 편이 좋습니다.';
   else msg = '정의, 특성, 키, 설계 단계부터 다시 정리하세요.';
@@ -2601,6 +2828,10 @@ document.getElementById('submit-btn').addEventListener('click', () => {
   const breakdown = TYPE_ORDER.map(type => {
     const qs = state.questions.map((q, i) => ({ q, i })).filter(x => x.q.type === type);
     if (!qs.length) return '';
+    if (type === 'essay') {
+      const reviewed = qs.filter(x => state.revealed[x.i]).length;
+      return `<span>${typeLabel(type)} 확인 ${reviewed}/${qs.length}</span>`;
+    }
     const c = qs.filter(x => state.correct[x.i]).length;
     return `<span>${typeLabel(type)} ${c}/${qs.length}</span>`;
   }).filter(Boolean).join('');
