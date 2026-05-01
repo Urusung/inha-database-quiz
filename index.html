@@ -77,6 +77,14 @@ header .pool-info { margin-top: 8px; font-size: 11px; opacity: 0.85; }
 
 .q-text { font-size: 15px; font-weight: 500; margin: 0 0 14px; color: #111827; white-space: pre-wrap; }
 .q-text code { background: #f3f4f6; padding: 2px 6px; border-radius: 4px; font-family: 'D2Coding', Menlo, Consolas, monospace; font-size: 13px; color: #be185d; }
+.question-figure {
+  margin: -2px 0 14px; padding: 12px; background: #fff;
+  border: 1.5px solid #e5e7eb; border-radius: 10px; overflow-x: auto;
+}
+.question-figure svg {
+  display: block; width: 100%; min-width: 460px; max-width: 680px;
+  height: auto; margin: 0 auto;
+}
 
 .choices { display: flex; flex-direction: column; gap: 7px; }
 .choice {
@@ -202,6 +210,8 @@ footer { text-align: center; margin-top: 30px; font-size: 11px; color: #9ca3af; 
   .q-num { font-size: 12px; padding: 2px 8px; }
   .q-tag { font-size: 10.5px; padding: 2px 6px; }
   .q-text { font-size: 14.5px; margin-bottom: 12px; }
+  .question-figure { padding: 10px; margin-bottom: 12px; }
+  .question-figure svg { min-width: 420px; }
 
   .choice { padding: 9px 11px; gap: 9px; border-radius: 9px; }
   .choice-num { width: 20px; height: 20px; font-size: 11.5px; }
@@ -932,7 +942,8 @@ const CHECK_POOL = [
     chapter: "4",
     source: "체크문제(4)",
     type: "choice",
-    question: "병원에서 의사와 환자의 관계를 표현한 E-R 다이어그램이 '환자 n - 진료 - 1 의사'일 때, 설명으로 옳지 않은 것은?",
+    question: "병원에서 의사와 환자의 관계를 표현한 E-R 다이어그램이다. 이에 대한 설명으로 옳지 않은 것은?",
+    figure: "hospitalDoctorPatientErd",
     choices: [
       "의사 개체와 환자 개체는 일대다 관계다.",
       "의사 한 명이 여러 명의 환자를 진료할 수 있다.",
@@ -1206,7 +1217,8 @@ const CHECK_POOL = [
     chapter: "6",
     source: "체크문제(6)",
     type: "choice",
-    question: "E-R 다이어그램을 릴레이션 스키마로 변환한 것 중 바른 것은? 학생-지도-교수는 n:1, 학생-수강-과목은 n:m, 교수-강의-과목은 1:n이다.",
+    question: "다음 E-R 다이어그램을 릴레이션 스키마로 변환한 것 중 바른 것은?",
+    figure: "studentProfessorCourseQuestionErd",
     choices: [
       "학생 학번(PK) | 이름 | 교번(FK)",
       "교수 교번(PK) | 이름 | 과목번호(FK)",
@@ -2364,7 +2376,7 @@ const POOL = [
 ];
 const TYPE_LABEL = { choice: '객관식', multi: '복수선택', ox: 'OX', short: '단답형', essay: '서술형' };
 const TYPE_ORDER = ['choice', 'multi', 'ox', 'short', 'essay'];
-const SOURCE_LABEL = { all: '전체 자료', check: '체크문제', lecture: '강의 슬라이드', extra: '예상 대비' };
+const SOURCE_LABEL = { all: '전체 자료', check: '체크문제+예상 대비', lecture: '강의 슬라이드', extra: '예상 대비' };
 const SOURCE_ORDER = ['check', 'lecture', 'extra'];
 const CHAPTERS = [...new Set(POOL.map(q => q.chapter))].sort((a, b) => Number(a) - Number(b));
 
@@ -2383,6 +2395,11 @@ function normalize(s) {
 function typeLabel(type) { return TYPE_LABEL[type] || type; }
 function typeClass(type) { return 'type-' + type; }
 function isAutoGraded(q) { return q.type !== 'essay'; }
+function sourceMatches(q, source) {
+  if (source === 'all') return true;
+  if (source === 'check') return q.bank === 'check' || q.bank === 'extra';
+  return q.bank === source;
+}
 
 const state = {
   questions: [],
@@ -2397,7 +2414,7 @@ const state = {
 
 function filteredCount({ source = state.sourceFilter, chapter = state.chapterFilter, type = state.typeFilter } = {}) {
   return POOL.filter(q => {
-    const bySource = source === 'all' || q.bank === source;
+    const bySource = sourceMatches(q, source);
     const byChapter = chapter === 'all' || q.chapter === chapter;
     const byType = type === 'all' || q.type === type;
     return bySource && byChapter && byType;
@@ -2406,23 +2423,30 @@ function filteredCount({ source = state.sourceFilter, chapter = state.chapterFil
 
 function currentPool() {
   return POOL.filter(q => {
-    const bySource = state.sourceFilter === 'all' || q.bank === state.sourceFilter;
+    const bySource = sourceMatches(q, state.sourceFilter);
     const byChapter = state.chapterFilter === 'all' || q.chapter === state.chapterFilter;
     const byType = state.typeFilter === 'all' || q.type === state.typeFilter;
     return bySource && byChapter && byType;
   });
 }
 
-function buildSet() {
+function buildSet({ excludeIds = new Set() } = {}) {
   const pool = currentPool();
+  const candidates = excludeIds.size ? pool.filter(q => !excludeIds.has(q.id)) : pool;
   if (state.countMode === 'all') {
-    return pool.slice().sort((a, b) => a.id.localeCompare(b.id, 'ko'));
+    return candidates.slice().sort((a, b) => a.id.localeCompare(b.id, 'ko'));
   }
-  return shuffle(pool).slice(0, Math.min(Number(state.countMode), pool.length));
+  return shuffle(candidates).slice(0, Math.min(Number(state.countMode), candidates.length));
 }
 
-function newRound() {
-  state.questions = buildSet();
+function newRound({ excludeCurrent = false } = {}) {
+  const excludeIds = excludeCurrent ? new Set(state.questions.map(q => q.id)) : new Set();
+  const nextQuestions = buildSet({ excludeIds });
+  if (excludeCurrent && state.questions.length && !nextQuestions.length) {
+    alert('현재 조건에서는 방금 푼 문제를 제외하고 새로 출제할 문제가 없습니다. 자료, 장, 유형 필터를 넓혀주세요.');
+    return;
+  }
+  state.questions = nextQuestions;
   state.answers = {};
   state.revealed = {};
   state.correct = {};
@@ -2458,6 +2482,81 @@ function answerText(q) {
   if (q.type === 'choice') return `${q.answer + 1}. ${q.choices[q.answer]}`;
   if (q.type === 'multi') return q.answer.map(i => `${i + 1}. ${q.choices[i]}`).join(' / ');
   return q.answer;
+}
+
+function renderQuestionFigure(name) {
+  if (name === 'hospitalDoctorPatientErd') {
+    return `
+      <div class="question-figure" role="img" aria-label="환자와 의사의 진료 관계 E-R 다이어그램">
+        <svg viewBox="0 0 720 170" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <style>
+              .qerd-line { stroke: #d1d5db; stroke-width: 3; stroke-linecap: square; fill: none; }
+              .qerd-shape { fill: #fff; stroke: #d1d5db; stroke-width: 3; }
+              .qerd-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif; fill: #111827; text-anchor: middle; dominant-baseline: middle; font-size: 23px; font-weight: 800; }
+              .qerd-card { font-size: 25px; font-weight: 700; fill: #111827; }
+            </style>
+          </defs>
+          <rect class="qerd-shape" x="58" y="58" width="122" height="56" rx="3"/>
+          <text class="qerd-text" x="119" y="86">환자</text>
+          <line class="qerd-line" x1="180" y1="86" x2="290" y2="86"/>
+          <polygon class="qerd-shape" points="360,38 430,86 360,134 290,86"/>
+          <text class="qerd-text" x="360" y="86">진료</text>
+          <line class="qerd-line" x1="430" y1="80" x2="538" y2="80"/>
+          <line class="qerd-line" x1="430" y1="92" x2="538" y2="92"/>
+          <rect class="qerd-shape" x="538" y="58" width="122" height="56" rx="3"/>
+          <text class="qerd-text" x="599" y="86">의사</text>
+          <text class="qerd-text qerd-card" x="248" y="60">n</text>
+          <text class="qerd-text qerd-card" x="490" y="60">1</text>
+        </svg>
+      </div>`;
+  }
+
+  if (name === 'studentProfessorCourseQuestionErd') {
+    return `
+      <div class="question-figure" role="img" aria-label="학생, 교수, 과목 관계 E-R 다이어그램">
+        <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <style>
+              .sq-line { stroke: #94a3b8; stroke-width: 2.5; fill: none; }
+              .sq-entity { fill: #fff; stroke: #cbd5e1; stroke-width: 2.5; }
+              .sq-relation { fill: #fff; stroke: #cbd5e1; stroke-width: 2.5; }
+              .sq-text { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif; fill: #111827; text-anchor: middle; dominant-baseline: middle; font-size: 20px; font-weight: 800; }
+              .sq-card { font-size: 22px; fill: #0f172a; }
+            </style>
+          </defs>
+          <rect class="sq-entity" x="70" y="56" width="104" height="48" rx="3"/>
+          <text class="sq-text" x="122" y="80">학생</text>
+          <rect class="sq-entity" x="546" y="56" width="104" height="48" rx="3"/>
+          <text class="sq-text" x="598" y="80">교수</text>
+          <rect class="sq-entity" x="308" y="244" width="104" height="48" rx="3"/>
+          <text class="sq-text" x="360" y="268">과목</text>
+
+          <polygon class="sq-relation" points="360,43 420,80 360,117 300,80"/>
+          <text class="sq-text" x="360" y="80">지도</text>
+          <line class="sq-line" x1="174" y1="80" x2="300" y2="80"/>
+          <line class="sq-line" x1="420" y1="80" x2="546" y2="80"/>
+          <text class="sq-text sq-card" x="238" y="58">n</text>
+          <text class="sq-text sq-card" x="482" y="58">1</text>
+
+          <polygon class="sq-relation" points="230,137 290,174 230,211 170,174"/>
+          <text class="sq-text" x="230" y="174">수강</text>
+          <line class="sq-line" x1="138" y1="104" x2="180" y2="146"/>
+          <line class="sq-line" x1="280" y1="202" x2="318" y2="244"/>
+          <text class="sq-text sq-card" x="165" y="133">n</text>
+          <text class="sq-text sq-card" x="300" y="229">m</text>
+
+          <polygon class="sq-relation" points="490,137 550,174 490,211 430,174"/>
+          <text class="sq-text" x="490" y="174">강의</text>
+          <line class="sq-line" x1="582" y1="104" x2="540" y2="146"/>
+          <line class="sq-line" x1="440" y1="202" x2="402" y2="244"/>
+          <text class="sq-text sq-card" x="555" y="133">1</text>
+          <text class="sq-text sq-card" x="420" y="229">n</text>
+        </svg>
+      </div>`;
+  }
+
+  return '';
 }
 
 function renderDiagram(name) {
@@ -2607,6 +2706,7 @@ function render() {
           <span class="q-tag">${escapeHtml(q.source)}</span>
         </div>
         <div class="q-text">${escapeHtml(q.question)}</div>
+        ${renderQuestionFigure(q.figure)}
         ${body}
         ${explain}
       </div>`;
@@ -2782,9 +2882,9 @@ function renderFilters() {
 function renderPoolInfo() {
   const info = document.getElementById('pool-info');
   const selected = currentPool();
-  const byBank = (bank) => POOL.filter(q => q.bank === bank).length;
+  const bySource = (source) => POOL.filter(q => sourceMatches(q, source)).length;
   const byType = (type) => selected.filter(q => q.type === type).length;
-  const sourceCounts = SOURCE_ORDER.map(source => `${SOURCE_LABEL[source]} ${byBank(source)}`).join(' / ');
+  const sourceCounts = SOURCE_ORDER.map(source => `${SOURCE_LABEL[source]} ${bySource(source)}`).join(' / ');
   info.textContent = `문제 풀: 전체 ${POOL.length}문제 (${sourceCounts}) · 현재 ${SOURCE_LABEL[state.sourceFilter]} ${selected.length}문제 (객관식 ${byType('choice')} / 복수선택 ${byType('multi')} / OX ${byType('ox')} / 단답형 ${byType('short')} / 서술형 ${byType('essay')})`;
 }
 
@@ -2844,7 +2944,7 @@ document.getElementById('submit-btn').addEventListener('click', () => {
 
 document.getElementById('reset-btn').addEventListener('click', () => {
   if (hasProgress() && !confirm('새 문제로 바꾸면 현재 답안이 사라집니다. 진행할까요?')) return;
-  newRound();
+  newRound({ excludeCurrent: true });
 });
 
 renderPoolInfo();
