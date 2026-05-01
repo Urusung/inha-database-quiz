@@ -85,6 +85,10 @@ header .pool-info { margin-top: 8px; font-size: 11px; opacity: 0.85; }
   display: block; width: 100%; min-width: 460px; max-width: 680px;
   height: auto; margin: 0 auto;
 }
+.question-figure img {
+  display: block; width: 100%; max-width: 680px;
+  height: auto; margin: 0 auto;
+}
 
 .choices { display: flex; flex-direction: column; gap: 7px; }
 .choice {
@@ -943,7 +947,8 @@ const CHECK_POOL = [
     source: "체크문제(4)",
     type: "choice",
     question: "병원에서 의사와 환자의 관계를 표현한 E-R 다이어그램이다. 이에 대한 설명으로 옳지 않은 것은?",
-    figure: "hospitalDoctorPatientErd",
+    image: "assets/questions/c4-013-erd.png",
+    imageAlt: "환자와 의사의 진료 관계 E-R 다이어그램",
     choices: [
       "의사 개체와 환자 개체는 일대다 관계다.",
       "의사 한 명이 여러 명의 환자를 진료할 수 있다.",
@@ -1218,7 +1223,8 @@ const CHECK_POOL = [
     source: "체크문제(6)",
     type: "choice",
     question: "다음 E-R 다이어그램을 릴레이션 스키마로 변환한 것 중 바른 것은?",
-    figure: "studentProfessorCourseQuestionErd",
+    image: "assets/questions/c6-007-erd.png",
+    imageAlt: "학생, 교수, 과목의 지도, 수강, 강의 관계 E-R 다이어그램",
     choices: [
       "학생 학번(PK) | 이름 | 교번(FK)",
       "교수 교번(PK) | 이름 | 과목번호(FK)",
@@ -2484,6 +2490,14 @@ function answerText(q) {
   return q.answer;
 }
 
+function renderQuestionImage(q) {
+  if (!q.image) return '';
+  return `
+    <div class="question-figure">
+      <img src="${escapeHtml(q.image)}" alt="${escapeHtml(q.imageAlt || q.question)}" loading="lazy">
+    </div>`;
+}
+
 function renderQuestionFigure(name) {
   if (name === 'hospitalDoctorPatientErd') {
     return `
@@ -2706,6 +2720,7 @@ function render() {
           <span class="q-tag">${escapeHtml(q.source)}</span>
         </div>
         <div class="q-text">${escapeHtml(q.question)}</div>
+        ${renderQuestionImage(q)}
         ${renderQuestionFigure(q.figure)}
         ${body}
         ${explain}
