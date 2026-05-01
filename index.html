@@ -2377,7 +2377,7 @@ const POOL = [
 const TYPE_LABEL = { choice: '객관식', multi: '복수선택', ox: 'OX', short: '단답형', essay: '서술형' };
 const TYPE_ORDER = ['choice', 'multi', 'ox', 'short', 'essay'];
 const SOURCE_LABEL = { all: '전체 자료', check: '체크문제+예상 대비', lecture: '강의 슬라이드', extra: '예상 대비' };
-const SOURCE_ORDER = ['check', 'lecture', 'extra'];
+const SOURCE_ORDER = ['check', 'lecture'];
 const CHAPTERS = [...new Set(POOL.map(q => q.chapter))].sort((a, b) => Number(a) - Number(b));
 
 function shuffle(arr) {
@@ -2406,7 +2406,7 @@ const state = {
   answers: {},
   revealed: {},
   correct: {},
-  sourceFilter: 'lecture',
+  sourceFilter: 'check',
   chapterFilter: 'all',
   typeFilter: 'all',
   countMode: '20',
