@@ -108,7 +108,7 @@ header .pool-info { margin-top: 8px; font-size: 11px; opacity: 0.85; }
 .choice.selected .choice-num { background: #0ea5e9; border-color: #0ea5e9; color: white; }
 .choice.correct .choice-num { background: #10b981; border-color: #10b981; color: white; }
 .choice.wrong .choice-num { background: #ef4444; border-color: #ef4444; color: white; }
-.choice-text { flex: 1; font-size: 14px; color: #374151; }
+.choice-text { flex: 1; font-size: 14px; color: #374151; white-space: pre-wrap; line-height: 1.5; }
 
 .ox-choices { display: flex; gap: 10px; }
 .ox-btn {
@@ -786,12 +786,12 @@ const CHECK_POOL = [
     chapter: "3",
     source: "체크문제(3)",
     type: "choice",
-    question: "DBMS 구성 요소의 역할 연결로 옳은 것은? (a) 스키마 정의 해석 및 데이터 사전 저장, (b) 데이터 처리 요구 실행, (c) 응용 프로그램에 삽입된 DML 추출, (d) 접근 권한과 무결성 제약조건 검사",
+    question: "DBMS 구성 요소의 역할 연결로 옳은 것은?\n(a) 스키마 정의 해석 및 데이터 사전 저장\n(b) 데이터 처리 요구 실행\n(c) 응용 프로그램에 삽입된 DML 추출\n(d) 접근 권한과 무결성 제약조건 검사",
     choices: [
-      "DDL 컴파일러 / DML 프리 컴파일러 / 트랜잭션 관리자 / 런타임 데이터베이스 처리기",
-      "저장 데이터 관리자 / DML 프리 컴파일러 / DDL 컴파일러 / 런타임 데이터베이스 처리기",
-      "DDL 컴파일러 / 런타임 데이터베이스 처리기 / DML 프리 컴파일러 / 트랜잭션 관리자",
-      "저장 데이터 관리자 / 런타임 데이터베이스 처리기 / DDL 컴파일러 / 트랜잭션 관리자"
+      "(a) DDL 컴파일러\n(b) DML 프리 컴파일러\n(c) 트랜잭션 관리자\n(d) 런타임 데이터베이스 처리기",
+      "(a) 저장 데이터 관리자\n(b) DML 프리 컴파일러\n(c) DDL 컴파일러\n(d) 런타임 데이터베이스 처리기",
+      "(a) DDL 컴파일러\n(b) 런타임 데이터베이스 처리기\n(c) DML 프리 컴파일러\n(d) 트랜잭션 관리자",
+      "(a) 저장 데이터 관리자\n(b) 런타임 데이터베이스 처리기\n(c) DDL 컴파일러\n(d) 트랜잭션 관리자"
     ],
     answer: 2,
     explanation: "DDL 컴파일러는 스키마를 처리하고, 런타임 처리기는 요구를 실행하며, DML 프리 컴파일러는 삽입된 DML을 추출하고, 트랜잭션 관리자는 권한과 무결성 등을 검사한다."
@@ -1233,12 +1233,12 @@ const CHECK_POOL = [
     chapter: "6",
     source: "체크문제(6)",
     type: "choice",
-    question: "요구 사항을 릴레이션 스키마로 설계했을 때 가장 적절한 것은? 교수:학생 = 1:N 진로 지도, 2학년 멘토:1학년 멘티 = 1:N 멘토링",
+    question: "요구 사항을 릴레이션 스키마로 설계했을 때 가장 적절한 것은?\n교수:학생 = 1:N 진로 지도\n2학년 멘토:1학년 멘티 = 1:N 멘토링",
     choices: [
-      "학생(학번, 이름, 멘토, 멘토링내용) / 교수(교수ID, 이름, 지도학생학번, 지도내용)",
-      "학생(학번, 이름, 멘티, 멘토링내용) / 교수(교수ID, 이름, 지도학생학번, 지도내용)",
-      "학생(학번, 이름, 지도교수ID, 지도내용, 멘토, 멘토링내용) / 교수(교수ID, 이름)",
-      "학생(학번, 이름, 지도교수ID, 지도내용, 멘티, 멘토링내용) / 교수(교수ID, 이름)"
+      "학생(학번, 이름, 멘토, 멘토링내용)\n교수(교수ID, 이름, 지도학생학번, 지도내용)",
+      "학생(학번, 이름, 멘티, 멘토링내용)\n교수(교수ID, 이름, 지도학생학번, 지도내용)",
+      "학생(학번, 이름, 지도교수ID, 지도내용, 멘토, 멘토링내용)\n교수(교수ID, 이름)",
+      "학생(학번, 이름, 지도교수ID, 지도내용, 멘티, 멘토링내용)\n교수(교수ID, 이름)"
     ],
     answer: 2,
     explanation: "1:N 관계에서는 N쪽에 1쪽의 기본키를 외래키로 둔다. 학생 릴레이션에 지도교수ID와 멘토 정보를 두는 것이 적절하다."
