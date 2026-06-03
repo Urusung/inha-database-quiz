@@ -157,7 +157,7 @@ header .pool-info { margin-top: 8px; font-size: 11px; opacity: 0.85; }
 }
 .explain.show { display: block; }
 .explain-label { font-weight: 700; margin-right: 6px; color: #a16207; }
-.explain .ans-line { display: block; margin-top: 4px; font-weight: 600; color: #422006; }
+.explain .ans-line { display: block; margin-top: 4px; font-weight: 600; color: #422006; white-space: pre-wrap; }
 .answer-diagram {
   margin-top: 10px; padding: 10px; background: #fff;
   border: 1px solid #fde68a; border-radius: 8px; overflow-x: auto;
@@ -245,7 +245,7 @@ footer { text-align: center; margin-top: 30px; font-size: 11px; color: #9ca3af; 
 <div class="container">
   <header>
     <h1>🗄️ 데이터베이스 문제은행</h1>
-    <p>체크문제 1~6 · 강의 슬라이드 1~6강 · 예상 대비 · 객관식 / 복수선택 / OX / 단답형 / 서술형</p>
+    <p>중간고사 범위와 기말고사 범위 분리 · 체크문제/강의 슬라이드/PDF 대비 · 객관식 / 복수선택 / OX / 단답형 / 서술형</p>
     <div class="pool-info" id="pool-info"></div>
   </header>
 
@@ -280,7 +280,7 @@ footer { text-align: center; margin-top: 30px; font-size: 11px; color: #9ca3af; 
     <button class="btn btn-primary" id="submit-btn">📊 결과 보기</button>
   </div>
 
-  <footer>원문 이미지: files/체크문제(1)~(6), files/1강~6강 · files 폴더는 로컬 전용</footer>
+  <footer>중간고사: 1장~데이터베이스 설계 개념적 설계까지 · 기말고사: 논리적 설계 이후, 정규화, SQL · files 폴더는 로컬 전용</footer>
 </div>
 
 <script>
@@ -1263,6 +1263,162 @@ const CHECK_POOL = [
     ],
     answer: 2,
     explanation: "여러 직원이 하나의 부서번호를 참조할 수 있으므로 부서 1개에 직원 여러 명이 대응되는 1:N 관계다."
+  },
+
+  {
+    id: "c7-001",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "정규화에 대한 설명으로 옳지 않은 것은?",
+    choices: [
+      "논리적 데이터베이스 설계 방법 중 하나다.",
+      "좋은 데이터베이스 스키마를 생성하고 불필요한 데이터의 중복을 방지하는 데 목적이 있다.",
+      "정규형에는 제1정규형, 제2정규형, 제3정규형, 보이스/코드 정규형, 제4정규형, 제5정규형 등이 있다.",
+      "속성들 간의 종속 관계를 분석하여 잘못 설계된 릴레이션들을 결합하면서 문제를 해결한다."
+    ],
+    answer: 3,
+    explanation: "정규화는 종속 관계를 분석해 릴레이션을 결합하는 것이 아니라 관련 있는 속성들로 분해하여 이상 현상을 줄이는 과정이다."
+  },
+  {
+    id: "c7-002",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "정규화의 필요성으로 거리가 먼 것은?",
+    choices: [
+      "수정, 삭제 시 이상 현상을 최소화한다.",
+      "데이터 중복을 활성화해서 효과적인 검색을 지원한다.",
+      "릴레이션을 분해하여 관련 있는 속성들로만 릴레이션을 구성한다.",
+      "릴레이션 구조의 안정성을 최대화한다."
+    ],
+    answer: 1,
+    explanation: "정규화는 데이터 중복을 활성화하는 것이 아니라 불필요한 중복을 줄여 이상 현상을 방지한다."
+  },
+  {
+    id: "c7-003",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "정규화를 하지 않으면 릴레이션을 조작할 때 데이터 중복 때문에 곤란한 현상이 발생할 수 있다. 이러한 이상(anomaly) 현상에 해당하지 않는 것은?",
+    choices: ["삭제 이상", "삽입 이상", "검색 이상", "갱신 이상"],
+    answer: 2,
+    explanation: "대표적인 이상 현상은 삽입 이상, 갱신 이상, 삭제 이상이다."
+  },
+  {
+    id: "c7-004",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "다음 중 릴레이션을 조작할 때 발생할 수 있는 이상 현상에 관한 설명으로 옳지 않은 것은?",
+    choices: [
+      "이상은 속성들 간에 존재하는 여러 종류의 종속 관계를 하나의 릴레이션에 표현할 때 발생한다.",
+      "데이터를 삽입할 때 불필요한 데이터가 함께 삽입되는 현상을 삽입 이상이라 한다.",
+      "릴레이션의 한 투플을 삭제할 때 연쇄 삭제로 인해 꼭 필요한 데이터가 함께 삭제되는 현상을 삭제 이상이라 한다.",
+      "속성들 간의 종속 관계를 분석하여 여러 개의 릴레이션을 하나로 결합하면서 이상 현상을 해결한다."
+    ],
+    answer: 3,
+    explanation: "이상 현상은 릴레이션을 적절히 분해하여 해결한다. 여러 릴레이션을 하나로 결합하는 설명은 정규화의 방향과 반대다."
+  },
+  {
+    id: "c7-005",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "어떤 릴레이션 R에서 X와 Y를 각각 R의 속성 집합의 부분 집합이라고 할 경우, 속성 X의 값 각각에 대해 시간에 관계없이 항상 속성 Y의 값이 오직 하나만 연관되어 있을 때 Y가 X에 함수적으로 종속되어 있다고 한다. 이를 기호로 옳게 표기한 것은?",
+    choices: ["X >> Y", "Y >> X", "Y → X", "X → Y"],
+    answer: 3,
+    explanation: "X가 Y를 함수적으로 결정하면 X → Y로 표기한다. X는 결정자, Y는 종속자다."
+  },
+  {
+    id: "c7-006",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "어떤 릴레이션에 속한 모든 속성이 원자 값만을 가지며, 기본키가 아닌 속성 모두가 기본키에 완전 함수 종속이지만 이행적 함수 종속이 나타나면 어떤 정규형에 해당하는가?",
+    choices: ["제1정규형", "제2정규형", "제3정규형", "보이스/코드 정규형"],
+    answer: 1,
+    explanation: "원자 값과 완전 함수 종속을 만족하면 제2정규형이다. 이행적 함수 종속이 남아 있으면 제3정규형은 아니다."
+  },
+  {
+    id: "c7-007",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "이행적 함수 종속 관계를 의미하는 것은?",
+    choices: [
+      "A → B이고 B → C일 때, A → C를 만족하는 관계",
+      "A → B이고 B → C일 때, C → A를 만족하는 관계",
+      "A → B이고 B → C일 때, B → A를 만족하는 관계",
+      "A → B이고 B → C일 때, C → B를 만족하는 관계"
+    ],
+    answer: 0,
+    explanation: "X → Y, Y → Z가 성립해 논리적으로 X → Z가 성립하면 Z가 X에 이행적으로 함수 종속된다."
+  },
+  {
+    id: "c7-008",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "정규화 과정 중 제1정규형에서 제2정규형이 되기 위한 조건은?",
+    choices: [
+      "제1정규형을 만족하고 모든 속성의 도메인이 원자 값이어야 한다.",
+      "제1정규형을 만족하고 기본키가 아닌 모든 속성들이 기본키에 이행적으로 함수 종속되지 않아야 한다.",
+      "제1정규형을 만족하고 다치 종속이 제거되어야 한다.",
+      "제1정규형을 만족하고 기본키가 아닌 모든 속성이 기본키에 완전 함수 종속되어야 한다."
+    ],
+    answer: 3,
+    explanation: "제2정규형은 제1정규형을 만족하면서 기본키가 아닌 모든 속성이 기본키 전체에 완전 함수 종속되어야 한다."
+  },
+  {
+    id: "c7-009",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "제2정규형에서 제3정규형이 되기 위한 조건은?",
+    choices: ["이행적 함수 종속 제거", "부분적 함수 종속 제거", "다치 종속 제거", "결정자이면서 후보키가 아닌 것 제거"],
+    answer: 0,
+    explanation: "제3정규형은 제2정규형을 만족하면서 기본키가 아닌 속성이 기본키에 이행적으로 함수 종속되지 않아야 한다."
+  },
+  {
+    id: "c7-010",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "정규화에 관한 설명으로 옳지 않은 것은?",
+    choices: [
+      "모든 속성의 도메인이 원자 값만을 가지면 릴레이션은 제1정규형에 해당된다.",
+      "정규화는 제1정규형에서 제5정규형으로 갈수록 만족시켜야 할 제약조건이 많아진다.",
+      "릴레이션이 제1정규형을 만족하면서 기본키가 아닌 모든 속성이 기본키에 완전 함수 종속이면 제2정규형에 해당한다.",
+      "릴레이션이 제2정규형을 만족하고 결정자이면서 후보키가 아닌 것을 제거하면 제3정규형에 해당된다."
+    ],
+    answer: 3,
+    explanation: "모든 결정자가 후보키가 되도록 하는 조건은 보이스/코드 정규형(BCNF)의 핵심 조건이다."
+  },
+  {
+    id: "c7-011",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "A, B, C, D 속성으로 구성된 릴레이션 R은 {A, B}가 기본키이다. 함수 종속이 {A, B} → C, {A, B} → D, B → C, C → D인 경우 이 릴레이션은 어떤 정규형에 속하는가?",
+    choices: ["제1정규형", "제2정규형", "제3정규형", "보이스/코드 정규형"],
+    answer: 0,
+    explanation: "기본키의 일부인 B가 C를 결정하므로 부분 함수 종속이 존재한다. 원자 값이라는 전제에서는 제1정규형까지만 만족한다."
+  },
+  {
+    id: "c7-012",
+    chapter: "7",
+    source: "체크문제(7)",
+    type: "choice",
+    question: "수강 릴레이션이 다음과 같을 때, 수강 릴레이션에 대한 설명으로 옳지 않은 것은?\n\n학번 | 과목번호 | 학점 | 과목이름\n100 | A01 | A | JAVA\n101 | B01 | D | C#\n101 | B03 | A | 데이터베이스\n100 | B01 | B | C#\n200 | A02 | C | 파이썬",
+    choices: [
+      "제2정규형을 만족시킨다.",
+      "아직 수강 학생이 없는 새로운 과목을 삽입할 때 삽입 이상이 발생한다.",
+      "학번이 101인 학생이 수강을 취소하면 삭제 이상이 발생할 수 있다.",
+      "과목이름을 수정하려 할 때 갱신 이상이 발생할 수 있다."
+    ],
+    answer: 0,
+    explanation: "과목이름은 복합 기본키 {학번, 과목번호} 전체가 아니라 과목번호에 부분 함수 종속된다. 따라서 제2정규형을 만족하지 않는다."
   }
 ];
 const LECTURE_POOL = [
@@ -2375,16 +2531,1828 @@ const EXTRA_POOL = [
     diagram: "studentProfessorCourseErd"
   }
 ];
+const FINAL_POOL = [
+  {
+    id: "f6-001",
+    chapter: "6",
+    source: "체크문제(6) 후반",
+    type: "choice",
+    question: "데이터베이스를 저장 장치에 실제로 저장하기 위한 저장 레코드나 인덱스 구조 등을 설계하고, 접근 경로 설계 등을 담당하는 단계는?",
+    choices: ["논리적 설계", "요구 조건 분석", "물리적 설계", "개념적 설계"],
+    answer: 2,
+    explanation: "저장 레코드, 인덱스 구조, 내부 저장 구조, 접근 경로는 물리적 설계 단계에서 결정한다."
+  },
+  {
+    id: "f6-002",
+    chapter: "6",
+    source: "체크문제(6) 후반",
+    type: "choice",
+    question: "데이터베이스 설계 단계와 그 단계에서 수행되는 결과를 잘못 연결한 것은?",
+    choices: [
+      "개념적 설계 단계 - 목표 DBMS에 독립적인 개념적 스키마 설계",
+      "논리적 설계 단계 - 목표 DBMS에 독립적인 논리적 스키마 설계",
+      "물리적 설계 단계 - 목표 DBMS에 적합한 물리적 스키마 설계",
+      "구현 단계 - 목표 DBMS에서 SQL 문을 실행하여 데이터베이스 생성"
+    ],
+    answer: 1,
+    explanation: "논리적 설계는 목표 DBMS가 처리할 수 있는 논리적 스키마를 만드는 단계다. DBMS에 독립적인 것은 개념적 설계다."
+  },
+  {
+    id: "f6-003",
+    chapter: "6",
+    source: "체크문제(6) 후반",
+    type: "choice",
+    question: "다음 E-R 다이어그램을 릴레이션 스키마로 변환한 것 중 바른 것은?",
+    image: "assets/questions/c6-007-erd.png",
+    imageAlt: "학생, 교수, 과목의 지도, 수강, 강의 관계 E-R 다이어그램",
+    choices: [
+      "학생 학번(PK) | 이름 | 교번(FK)",
+      "교수 교번(PK) | 이름 | 과목번호(FK)",
+      "과목 과목번호(PK) | 과목명 | 학번(FK)",
+      "수강 학번(PK, FK) | 과목번호(PK, FK)"
+    ],
+    answer: 0,
+    explanation: "학생과 교수의 지도 관계는 교수 1명에 학생 여러 명이 대응되는 1:n 관계이므로 n쪽인 학생 릴레이션에 교수의 기본키를 외래키로 둔다."
+  },
+  {
+    id: "f6-004",
+    chapter: "6",
+    source: "체크문제(6) 후반",
+    type: "choice",
+    question: "요구 사항을 릴레이션 스키마로 설계했을 때 가장 적절한 것은?\n교수:학생 = 1:N 진로 지도\n2학년 멘토:1학년 멘티 = 1:N 멘토링",
+    choices: [
+      "학생(학번, 이름, 멘토, 멘토링내용)\n교수(교수ID, 이름, 지도학생학번, 지도내용)",
+      "학생(학번, 이름, 멘티, 멘토링내용)\n교수(교수ID, 이름, 지도학생학번, 지도내용)",
+      "학생(학번, 이름, 지도교수ID, 지도내용, 멘토, 멘토링내용)\n교수(교수ID, 이름)",
+      "학생(학번, 이름, 지도교수ID, 지도내용, 멘티, 멘토링내용)\n교수(교수ID, 이름)"
+    ],
+    answer: 2,
+    explanation: "1:n 관계는 n쪽 릴레이션에 1쪽 기본키를 외래키로 둔다. 진로 지도와 멘토링 모두 학생 쪽에 외래키와 관계 속성을 두는 구성이 적절하다."
+  },
+  {
+    id: "f6-005",
+    chapter: "6",
+    source: "체크문제(6) 후반",
+    type: "choice",
+    question: "직원 릴레이션의 부서번호가 부서 릴레이션의 번호를 참조하는 외래키일 때, 부서와 직원의 '관리' 관계에 대한 설명으로 옳은 것은?",
+    choices: [
+      "관리 관계는 직원에서 부서 쪽으로 1:N 관계이다.",
+      "관리 관계는 N:M 관계이다.",
+      "관리 관계는 부서에서 직원 쪽으로 1:N 관계이다.",
+      "관리 관계는 1:1 관계이다."
+    ],
+    answer: 2,
+    explanation: "여러 직원이 같은 부서번호를 가질 수 있으므로 부서 1개에 직원 여러 명이 대응되는 부서 → 직원 1:n 관계다."
+  },
+  {
+    id: "f6-006",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "choice",
+    question: "논리적 설계 단계의 목적과 결과물로 옳은 것은?",
+    choices: [
+      "DBMS에 독립적인 개념적 스키마를 설계하고 E-R 다이어그램을 만든다.",
+      "DBMS에 적합한 논리적 스키마를 설계하고 릴레이션 스키마를 만든다.",
+      "하드웨어 특성을 고려해 내부 저장 구조와 인덱스만 설계한다.",
+      "SQL 명령문을 실행해 데이터베이스를 실제로 생성한다."
+    ],
+    answer: 1,
+    explanation: "논리적 설계는 개념적 스키마를 논리적 데이터 모델로 표현하며, 일반적으로 E-R 다이어그램을 릴레이션 스키마로 변환한다."
+  },
+  {
+    id: "f6-007",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "multi",
+    question: "논리적 설계 단계의 주요 작업으로 옳은 것을 모두 고르시오.",
+    choices: [
+      "E-R 다이어그램을 릴레이션 스키마로 변환한다.",
+      "속성의 데이터 타입과 길이, 널 값 허용 여부, 기본값, 제약조건을 세부적으로 결정한다.",
+      "요구 사항 명세서를 작성하기 위해 사용자 요구만 수집한다.",
+      "SQL 문을 DBMS에서 실행하여 데이터베이스를 실제 생성한다."
+    ],
+    answer: [0, 1],
+    explanation: "논리적 설계는 E-R 다이어그램을 릴레이션 스키마로 변환하고, 속성 세부 정보와 제약조건을 문서화한다."
+  },
+  {
+    id: "f6-008",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "multi",
+    question: "E-R 다이어그램을 릴레이션 스키마로 변환하는 기본 규칙으로 옳은 것을 모두 고르시오.",
+    choices: [
+      "모든 개체는 릴레이션으로 변환한다.",
+      "다대다(n:m) 관계는 릴레이션으로 변환한다.",
+      "일대다(1:n) 관계는 외래키로 표현한다.",
+      "일대일(1:1) 관계는 외래키로 표현한다.",
+      "다중 값 속성은 반드시 하나의 속성 칸에 여러 값으로 저장한다."
+    ],
+    answer: [0, 1, 2, 3],
+    explanation: "다중 값 속성은 독립적인 릴레이션으로 변환한다. 한 속성 칸에 여러 값을 저장하면 릴레이션 특성을 위반한다."
+  },
+  {
+    id: "f6-009",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "choice",
+    question: "규칙 1 '모든 개체는 릴레이션으로 변환한다'에 대한 설명으로 옳지 않은 것은?",
+    choices: [
+      "개체의 이름은 릴레이션의 이름으로 변환한다.",
+      "개체의 속성은 릴레이션의 속성으로 변환한다.",
+      "개체의 키 속성은 릴레이션의 기본키로 변환한다.",
+      "복합 속성은 복합 속성 자체와 단순 속성을 모두 중복 저장한다."
+    ],
+    answer: 3,
+    explanation: "복합 속성은 복합 속성을 구성하는 단순 속성만 릴레이션의 속성으로 변환한다."
+  },
+  {
+    id: "f6-010",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "choice",
+    question: "다대다(n:m) 관계를 릴레이션으로 변환하는 방법으로 옳은 것은?",
+    choices: [
+      "관계에 참여하는 한쪽 개체의 기본키만 임의로 선택해 기본키로 둔다.",
+      "관계 이름을 릴레이션 이름으로 사용하고, 참여 개체의 기본키들을 외래키로 포함하며 외래키 조합을 기본키로 지정한다.",
+      "다대다 관계는 반드시 삭제하고 아무 릴레이션도 만들지 않는다.",
+      "두 개체 릴레이션을 무조건 하나로 합쳐 관계 속성을 모두 버린다."
+    ],
+    answer: 1,
+    explanation: "n:m 관계는 별도 관계 릴레이션으로 만들고, 참여 개체의 기본키를 외래키로 가져와 조합 기본키로 지정한다."
+  },
+  {
+    id: "f6-011",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "choice",
+    question: "일반적인 일대다(1:n) 관계를 릴레이션 스키마로 변환하는 방법은?",
+    choices: [
+      "n측 개체 릴레이션의 기본키를 1측 릴레이션에 외래키로 둔다.",
+      "1측 개체 릴레이션의 기본키를 n측 릴레이션에 외래키로 둔다.",
+      "관계에 참여하는 모든 개체를 삭제한다.",
+      "두 개체 릴레이션을 반드시 하나로 합친다."
+    ],
+    answer: 1,
+    explanation: "일반적인 1:n 관계는 1측의 기본키를 n측 릴레이션에 외래키로 포함시켜 표현한다."
+  },
+  {
+    id: "f6-012",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "choice",
+    question: "약한 개체가 참여하는 일대다 관계를 변환할 때 n측 약한 개체 릴레이션의 기본키 지정 방법으로 옳은 것은?",
+    choices: [
+      "약한 개체 릴레이션은 기본키를 지정하지 않는다.",
+      "강한 개체의 기본키를 외래키로 포함하고, 이를 포함하여 기본키를 지정한다.",
+      "강한 개체의 기본키를 버리고 관계 속성만 기본키로 지정한다.",
+      "약한 개체와 강한 개체를 항상 하나의 릴레이션으로 합친다."
+    ],
+    answer: 1,
+    explanation: "약한 개체는 강한 개체에 존재 의존하므로 강한 개체의 기본키를 외래키로 가져오고 이를 포함해 기본키를 구성한다."
+  },
+  {
+    id: "f6-013",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "multi",
+    question: "일대일(1:1) 관계를 외래키로 표현하는 규칙으로 옳은 것을 모두 고르시오.",
+    choices: [
+      "일반적인 일대일 관계는 서로의 기본키를 주고받아 외래키로 지정할 수 있다.",
+      "일대일 관계에 필수적으로 참여하는 개체 릴레이션만 외래키를 받을 수 있다.",
+      "모든 개체가 필수적으로 참여하면 릴레이션 하나로 합칠 수 있다.",
+      "일대일 관계는 항상 n:m 관계 릴레이션으로만 변환해야 한다."
+    ],
+    answer: [0, 1, 2],
+    explanation: "1:1 관계는 참여 특성에 따라 서로 외래키를 주고받거나, 필수 참여 쪽에만 외래키를 두거나, 모두 필수 참여이면 하나로 합칠 수 있다."
+  },
+  {
+    id: "f6-014",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "choice",
+    question: "모든 개체가 일대일 관계에 필수적으로 참여할 때 적절한 변환 방법은?",
+    choices: [
+      "관계에 참여하는 개체 릴레이션들을 하나의 릴레이션으로 합쳐서 표현한다.",
+      "두 릴레이션을 모두 삭제하고 다중 값 속성 릴레이션만 만든다.",
+      "관계 속성은 모두 버리고 외래키도 두지 않는다.",
+      "반드시 양쪽 릴레이션에 서로의 기본키를 중복해서 저장해야 한다."
+    ],
+    answer: 0,
+    explanation: "1:1 관계에서 양쪽 개체가 모두 필수 참여하면 하나의 릴레이션으로 합쳐 표현할 수 있다."
+  },
+  {
+    id: "f6-015",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "choice",
+    question: "다중 값 속성을 릴레이션으로 변환하는 방법으로 옳은 것은?",
+    choices: [
+      "다중 값 속성은 원래 개체 릴레이션의 한 칸에 여러 값으로 저장한다.",
+      "다중 값 속성은 독립적인 릴레이션으로 변환하고, 원래 개체의 기본키를 외래키로 포함한다.",
+      "다중 값 속성은 항상 삭제한다.",
+      "다중 값 속성은 기본키나 외래키와 무관하게 임의의 문자열 하나로 합친다."
+    ],
+    answer: 1,
+    explanation: "다중 값 속성은 별도 릴레이션으로 만들고, 원래 개체의 기본키를 외래키로 가져와 다중 값 속성과 조합해 기본키로 지정한다."
+  },
+  {
+    id: "f6-016",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "ox",
+    question: "속성이 많은 관계는 관계 유형에 상관없이 독립적인 릴레이션으로 변환하는 것을 고려할 수 있다.",
+    answer: "O",
+    explanation: "슬라이드는 모든 관계를 독립적인 릴레이션으로 변환할 수 있으며, 속성이 많은 관계는 유형과 무관하게 릴레이션 변환을 고려할 수 있다고 설명한다."
+  },
+  {
+    id: "f6-017",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "ox",
+    question: "개체가 자기 자신과 관계를 맺는 순환 관계에는 기본 변환 규칙을 적용할 수 없다.",
+    answer: "X",
+    explanation: "순환 관계도 기본 규칙을 그대로 적용해 릴레이션 스키마로 변환한다."
+  },
+  {
+    id: "f6-018",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "choice",
+    question: "테이블 명세서에 대한 설명으로 옳은 것은?",
+    choices: [
+      "요구 사항 분석 전 사용자 인터뷰 질문지만 모은 문서다.",
+      "릴레이션 스키마에 대한 설계 정보를 기술한 문서다.",
+      "SQL 실행 결과만 저장하는 로그 파일이다.",
+      "정규화에서 삭제 이상만 표시하는 다이어그램이다."
+    ],
+    answer: 1,
+    explanation: "테이블 명세서는 릴레이션 스키마 변환 후 속성의 데이터 타입, 길이, 널 허용 여부, 기본값, 제약조건 등을 문서화한 것이다."
+  },
+  {
+    id: "f6-019",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "multi",
+    question: "테이블 명세서 작성 시 세부적으로 결정하고 문서화할 항목을 모두 고르시오.",
+    choices: [
+      "속성의 데이터 타입과 길이",
+      "널 값 허용 여부",
+      "기본값",
+      "제약조건",
+      "웹 화면의 배경색"
+    ],
+    answer: [0, 1, 2, 3],
+    explanation: "논리적 설계 후에는 속성 데이터 타입, 길이, 널 값 허용 여부, 기본값, 제약조건 등을 세부적으로 결정한다."
+  },
+  {
+    id: "f6-020",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "choice",
+    question: "물리적 설계 단계에 대한 설명으로 옳은 것은?",
+    choices: [
+      "사용자의 요구 사항을 수집해 요구 사항 명세서를 작성한다.",
+      "E-R 다이어그램에서 개체와 관계를 추출한다.",
+      "하드웨어나 운영체제의 특성을 고려해 인덱스 구조나 내부 저장 구조 등 물리적 구조를 설계한다.",
+      "SQL 명령문을 DBMS에서 실행해 데이터베이스를 실제 생성한다."
+    ],
+    answer: 2,
+    explanation: "물리적 설계는 하드웨어와 운영체제 특성을 고려해 인덱스 구조, 내부 저장 구조, 접근 경로 등을 설계한다."
+  },
+  {
+    id: "f6-021",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "choice",
+    question: "구현 단계에 대한 설명으로 옳은 것은?",
+    choices: [
+      "SQL로 작성한 명령문을 DBMS에서 실행하여 데이터베이스를 실제로 생성한다.",
+      "개념적 스키마를 E-R 다이어그램으로만 표현한다.",
+      "사용자의 요구 사항을 수집하는 단계다.",
+      "모든 관계를 무조건 하나의 릴레이션으로 합치는 단계다."
+    ],
+    answer: 0,
+    explanation: "구현 단계는 작성한 SQL 명령문을 DBMS에서 실행해 데이터베이스를 실제 생성하는 단계다."
+  },
+  {
+    id: "f6-022",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "short",
+    question: "E-R 다이어그램을 릴레이션 스키마로 변환하는 설계 단계는?",
+    answer: "논리적 설계",
+    alts: ["논리 설계", "logical design", "논리적설계"],
+    explanation: "논리적 설계의 주요 작업은 개념적 설계 결과물인 E-R 다이어그램을 릴레이션 스키마로 변환하는 것이다."
+  },
+  {
+    id: "f6-023",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "essay",
+    question: "E-R 다이어그램을 릴레이션 스키마로 변환하는 규칙 1~5를 순서대로 서술하시오.",
+    answer: "규칙 1은 모든 개체를 릴레이션으로 변환하는 것이다. 규칙 2는 다대다 관계를 별도 릴레이션으로 변환하는 것이다. 규칙 3은 일대다 관계를 외래키로 표현하는 것이다. 규칙 4는 일대일 관계를 외래키로 표현하되 참여 특성에 따라 서로 외래키를 주고받거나 필수 참여 쪽에 외래키를 두거나 하나로 합치는 것이다. 규칙 5는 다중 값 속성을 독립적인 릴레이션으로 변환하는 것이다.",
+    explanation: "핵심어: 개체→릴레이션, n:m 관계→릴레이션, 1:n 관계→n쪽 외래키, 1:1 관계→외래키/합침, 다중 값 속성→독립 릴레이션."
+  },
+  {
+    id: "f6-024",
+    chapter: "6",
+    source: "데이터베이스 설계 2 슬라이드",
+    type: "essay",
+    question: "논리적 설계, 물리적 설계, 구현 단계의 차이를 결과물 중심으로 서술하시오.",
+    answer: "논리적 설계는 E-R 다이어그램 같은 개념적 스키마를 목표 DBMS가 처리할 수 있는 논리적 데이터 모델로 변환하여 릴레이션 스키마를 만든다. 이때 속성의 데이터 타입, 길이, 널 값 허용 여부, 기본값, 제약조건 등을 정리해 테이블 명세서를 작성한다. 물리적 설계는 하드웨어나 운영체제 특성을 고려해 인덱스 구조, 내부 저장 구조, 접근 경로 등 물리적 구조를 설계한다. 구현은 SQL 명령문을 DBMS에서 실행해 데이터베이스를 실제로 생성하는 단계다.",
+    explanation: "핵심어: 릴레이션 스키마, 테이블 명세서, 인덱스/내부 저장 구조/접근 경로, SQL 실행."
+  },
+  {
+    id: "f7-001",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "choice",
+    question: "이상(anomaly) 현상에 대한 설명으로 가장 적절한 것은?",
+    choices: [
+      "릴레이션의 모든 속성이 원자 값을 가지는 상태다.",
+      "불필요한 데이터 중복으로 삽입, 수정, 삭제 연산 시 발생할 수 있는 부작용이다.",
+      "릴레이션을 자연 조인했을 때 원래 릴레이션으로 복원되는 성질이다.",
+      "후보키가 아닌 모든 결정자를 제거하는 정규형이다."
+    ],
+    answer: 1,
+    explanation: "이상 현상은 불필요한 중복 때문에 삽입, 갱신, 삭제 연산에서 발생하는 부작용이다."
+  },
+  {
+    id: "f7-002",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "choice",
+    question: "삽입 이상(insertion anomaly)의 예로 가장 적절한 것은?",
+    choices: [
+      "신규 고객을 저장하려면 아직 참여하지 않은 임시 이벤트번호까지 함께 넣어야 한다.",
+      "고객 등급을 일부 투플만 수정해 같은 고객이 서로 다른 등급을 갖게 된다.",
+      "이벤트 참여 취소 투플을 삭제했더니 고객 정보까지 사라진다.",
+      "분해된 릴레이션들을 자연 조인해 원래 릴레이션을 복원한다."
+    ],
+    answer: 0,
+    explanation: "삽입 이상은 새 데이터를 삽입하려면 관련 없는 불필요한 데이터도 함께 삽입해야 하는 문제다."
+  },
+  {
+    id: "f7-003",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "choice",
+    question: "갱신 이상(update anomaly)에 대한 설명으로 옳은 것은?",
+    choices: [
+      "투플을 삭제할 때 꼭 필요한 데이터까지 함께 삭제되는 문제다.",
+      "중복된 투플 중 일부만 수정되어 데이터가 불일치하게 되는 문제다.",
+      "새 투플을 삽입할 때 기본키가 자동으로 여러 개 생성되는 문제다.",
+      "속성값이 원자 값만 가지도록 만드는 과정이다."
+    ],
+    answer: 1,
+    explanation: "갱신 이상은 중복된 데이터 중 일부만 갱신되어 같은 의미의 데이터가 서로 다른 값을 갖는 문제다."
+  },
+  {
+    id: "f7-004",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "choice",
+    question: "삭제 이상(deletion anomaly)을 설명한 것은?",
+    choices: [
+      "기본키가 아닌 속성이 기본키 전체에 완전 함수 종속되는 현상",
+      "현재 릴레이션의 값만 보고 함수 종속을 잘못 판단하는 현상",
+      "투플 삭제 시 꼭 필요한 데이터까지 함께 손실되는 연쇄 삭제 현상",
+      "부속질의 결과가 다중행 단일열로 반환되는 현상"
+    ],
+    answer: 2,
+    explanation: "삭제 이상은 특정 투플을 삭제하면서 보존해야 할 다른 정보까지 함께 사라지는 문제다."
+  },
+  {
+    id: "f7-005",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "choice",
+    question: "정규화(normalization)의 기본 목표로 가장 적절한 것은?",
+    choices: [
+      "모든 릴레이션을 하나의 큰 릴레이션으로 결합한다.",
+      "관련 없는 함수 종속성은 별개의 릴레이션으로 표현하여 이상 현상을 줄인다.",
+      "외래키를 모두 제거해 참조 무결성 검사를 하지 않는다.",
+      "테이블 구조를 삭제하고 데이터만 보존한다."
+    ],
+    answer: 1,
+    explanation: "정규화는 함수 종속성을 이용해 연관 있는 속성들로만 릴레이션을 구성하도록 분해하는 과정이다."
+  },
+  {
+    id: "f7-006",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "choice",
+    question: "함수 종속 X → Y에 대한 설명으로 옳은 것은?",
+    choices: [
+      "Y가 결정자이고 X가 종속자다.",
+      "X와 Y는 반드시 기본키 전체와 같아야 한다.",
+      "X가 Y를 함수적으로 결정하고, Y가 X에 함수적으로 종속된다.",
+      "현재 저장된 값이 우연히 같으면 항상 X → Y가 성립한다."
+    ],
+    answer: 2,
+    explanation: "X → Y는 X가 결정자, Y가 종속자이며 하나의 X 값에 대해 Y 값이 항상 하나라는 뜻이다."
+  },
+  {
+    id: "f7-007",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "choice",
+    question: "함수 종속 관계를 판단할 때 유의할 점으로 옳은 것은?",
+    choices: [
+      "현재 릴레이션에 들어 있는 값만 보고 판단하면 충분하다.",
+      "속성 자체의 특성과 의미를 기반으로 판단해야 한다.",
+      "기본키나 후보키가 아닌 속성은 절대 결정자가 될 수 없다.",
+      "결정자가 종속자를 포함하는 당연한 관계를 가장 중요하게 고려한다."
+    ],
+    answer: 1,
+    explanation: "속성 값은 계속 바뀔 수 있으므로 현재 값만 보지 말고 속성의 의미와 제약을 기준으로 판단해야 한다."
+  },
+  {
+    id: "f7-008",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "choice",
+    question: "완전 함수 종속(FFD)에 대한 설명으로 옳은 것은?",
+    choices: [
+      "Y가 X에 함수적으로 종속되지만 X의 일부분에는 종속되지 않는 경우다.",
+      "Y가 X 전체가 아니라 X의 일부분에도 종속되는 경우다.",
+      "X → Y와 Y → Z가 존재해 X → Z가 논리적으로 성립하는 경우다.",
+      "모든 결정자가 후보키가 아닌 경우다."
+    ],
+    answer: 0,
+    explanation: "완전 함수 종속은 결정자 전체에 종속되며 결정자의 일부에는 종속되지 않는 상태다."
+  },
+  {
+    id: "f7-009",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "short",
+    question: "릴레이션 분해 후 자연 조인했을 때 분해 전 릴레이션으로 복원 가능해야 하는 성질을 무엇이라고 하는가?",
+    answer: "무손실 분해",
+    alts: ["무손실분해", "nonloss decomposition", "lossless decomposition", "무손실 조인 분해"],
+    explanation: "정규화 과정의 릴레이션 분해는 정보 손실 없이 원래 릴레이션으로 복원 가능한 무손실 분해여야 한다."
+  },
+  {
+    id: "f7-010",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "short",
+    question: "릴레이션의 모든 속성이 더는 분해되지 않는 원자 값만 가지면 만족하는 정규형은?",
+    answer: "제1정규형",
+    alts: ["1NF", "1정규형", "First Normal Form", "제 1 정규형"],
+    explanation: "제1정규형은 모든 속성이 원자 값만 가져야 한다."
+  },
+  {
+    id: "f7-011",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "choice",
+    question: "제2정규형(2NF)의 조건으로 옳은 것은?",
+    choices: [
+      "모든 결정자가 후보키여야 한다.",
+      "제1정규형에 속하고 기본키가 아닌 모든 속성이 기본키에 완전 함수 종속되어야 한다.",
+      "제2정규형에 속하고 이행적 함수 종속이 존재해야 한다.",
+      "다중행 단일열 부속질의에는 IN을 사용해야 한다."
+    ],
+    answer: 1,
+    explanation: "제2정규형은 1NF를 만족하고 부분 함수 종속이 제거되어 모든 비기본키 속성이 기본키 전체에 완전 함수 종속된 상태다."
+  },
+  {
+    id: "f7-012",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "choice",
+    question: "제3정규형(3NF)의 조건으로 옳은 것은?",
+    choices: [
+      "모든 속성 값이 복합값이어야 한다.",
+      "제1정규형에 속하고 부분 함수 종속이 반드시 존재해야 한다.",
+      "제2정규형에 속하고 기본키가 아닌 모든 속성이 기본키에 이행적 함수 종속되지 않아야 한다.",
+      "모든 부속질의 결과가 단일행 단일열이어야 한다."
+    ],
+    answer: 2,
+    explanation: "제3정규형은 2NF를 만족하면서 이행적 함수 종속이 제거된 상태다."
+  },
+  {
+    id: "f7-013",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "choice",
+    question: "보이스/코드 정규형(BCNF)의 핵심 조건은?",
+    choices: [
+      "모든 속성이 원자 값이어야 한다.",
+      "모든 비기본키 속성이 기본키에 부분 함수 종속되어야 한다.",
+      "이행적 함수 종속이 적어도 하나 있어야 한다.",
+      "함수 종속 관계의 모든 결정자가 후보키여야 한다."
+    ],
+    answer: 3,
+    explanation: "BCNF는 제3정규형보다 엄격하며, 모든 결정자가 후보키여야 한다."
+  },
+  {
+    id: "f7-014",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "multi",
+    question: "정규형에 대한 설명으로 옳은 것을 모두 고르시오.",
+    choices: [
+      "제1정규형은 모든 속성이 원자 값을 가져야 한다.",
+      "제2정규형은 부분 함수 종속 제거와 관련된다.",
+      "제3정규형은 이행적 함수 종속 제거와 관련된다.",
+      "BCNF는 모든 결정자가 후보키가 되도록 요구한다.",
+      "BCNF에 속하는 릴레이션은 제3정규형에 속하지 않는다."
+    ],
+    answer: [0, 1, 2, 3],
+    explanation: "BCNF는 강한 제3정규형으로 볼 수 있어 BCNF에 속하면 3NF에도 속한다."
+  },
+  {
+    id: "f7-015",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "ox",
+    question: "보이스/코드 정규형에 속하는 모든 릴레이션은 제3정규형에 속하지만, 제3정규형에 속하는 모든 릴레이션이 보이스/코드 정규형에 속하는 것은 아니다.",
+    answer: "O",
+    explanation: "BCNF는 제3정규형보다 더 엄격한 제약조건을 요구한다."
+  },
+  {
+    id: "f7-016",
+    chapter: "7",
+    source: "정규화 슬라이드",
+    type: "essay",
+    question: "정규화가 필요한 이유를 이상 현상 세 가지와 연결해 서술하시오.",
+    answer: "정규화는 불필요한 데이터 중복으로 인해 발생하는 삽입 이상, 갱신 이상, 삭제 이상을 줄이기 위해 필요하다. 삽입 이상은 새 데이터를 넣으려면 불필요한 데이터도 함께 넣어야 하는 문제이고, 갱신 이상은 중복 데이터 일부만 수정되어 불일치가 생기는 문제이며, 삭제 이상은 투플 삭제 시 꼭 필요한 데이터까지 손실되는 문제다. 정규화는 함수 종속성을 분석해 관련 있는 속성들로 릴레이션을 분해하여 이런 이상 현상을 줄인다.",
+    explanation: "핵심어: 데이터 중복, 삽입 이상, 갱신 이상, 삭제 이상, 함수 종속성, 릴레이션 분해."
+  },
+
+  {
+    id: "f8-001",
+    chapter: "8",
+    source: "데이터정의어 슬라이드",
+    type: "multi",
+    question: "데이터 정의어(DDL)에 해당하는 명령을 모두 고르시오.",
+    choices: ["CREATE", "ALTER", "DROP", "INSERT", "UPDATE"],
+    answer: [0, 1, 2],
+    explanation: "슬라이드의 데이터 정의어 범위는 CREATE, ALTER, DROP 문이다. INSERT와 UPDATE는 데이터 조작어다."
+  },
+  {
+    id: "f8-002",
+    chapter: "8",
+    source: "데이터정의어 슬라이드",
+    type: "choice",
+    question: "CREATE 문에 대한 설명으로 옳은 것은?",
+    choices: [
+      "테이블을 구성하고 속성, 속성 제약, 기본키, 외래키를 정의한다.",
+      "테이블의 기존 투플을 조건에 따라 삭제한다.",
+      "테이블의 특정 속성값만 수정한다.",
+      "부속질의 결과의 합집합을 구한다."
+    ],
+    answer: 0,
+    explanation: "CREATE 문은 테이블 구조와 속성 제약, 기본키와 외래키를 정의하는 명령어다."
+  },
+  {
+    id: "f8-003",
+    chapter: "8",
+    source: "데이터정의어 슬라이드",
+    type: "choice",
+    question: "bookid 속성이 없고 bookname, publisher 두 속성을 함께 기본키로 지정하려 할 때 필요한 방식은?",
+    choices: [
+      "PRIMARY KEY bookname, publisher처럼 괄호 없이 나열한다.",
+      "FOREIGN KEY(bookname, publisher)만 선언한다.",
+      "PRIMARY KEY(bookname, publisher)처럼 괄호를 사용해 복합키를 지정한다.",
+      "DROP TABLE bookname, publisher를 실행한다."
+    ],
+    answer: 2,
+    explanation: "두 개 이상의 속성으로 기본키를 만들 때는 PRIMARY KEY(bookname, publisher)처럼 괄호 안에 속성들을 함께 지정한다."
+  },
+  {
+    id: "f8-004",
+    chapter: "8",
+    source: "데이터정의어 슬라이드",
+    type: "ox",
+    question: "CREATE TABLE 문에서 기본키나 외래키 같은 제약조건을 명시하지 않으면 해당 테이블에는 그 제약조건이 정의되지 않는다.",
+    answer: "O",
+    explanation: "슬라이드는 제약사항이 없는 CREATE 문과 기본키를 추가한 CREATE 문을 구분해 보여준다."
+  },
+  {
+    id: "f8-005",
+    chapter: "8",
+    source: "데이터정의어 슬라이드",
+    type: "choice",
+    question: "ALTER 문에 대한 설명으로 옳은 것은?",
+    choices: [
+      "새로운 투플을 삽입하는 명령이다.",
+      "생성된 테이블의 속성과 속성 제약, 기본키, 외래키를 변경하는 명령이다.",
+      "테이블의 구조와 데이터를 모두 삭제하는 명령이다.",
+      "두 질의 결과의 교집합을 구하는 명령이다."
+    ],
+    answer: 1,
+    explanation: "ALTER 문은 이미 생성된 테이블의 속성이나 제약조건을 변경할 때 사용한다."
+  },
+  {
+    id: "f8-006",
+    chapter: "8",
+    source: "데이터정의어 슬라이드",
+    type: "choice",
+    question: "DROP 문과 DELETE 문의 차이로 옳은 것은?",
+    choices: [
+      "DROP은 데이터만 삭제하고 테이블 구조는 남긴다.",
+      "DELETE는 테이블 구조와 데이터를 모두 삭제한다.",
+      "DROP은 테이블의 구조와 데이터를 모두 삭제하고, DELETE는 테이블의 기존 투플을 삭제한다.",
+      "DROP과 DELETE는 완전히 같은 명령이다."
+    ],
+    answer: 2,
+    explanation: "DROP TABLE은 테이블 구조와 데이터를 모두 삭제한다. 데이터만 삭제하려면 DELETE 문을 사용한다."
+  },
+  {
+    id: "f8-007",
+    chapter: "8",
+    source: "데이터정의어 슬라이드",
+    type: "choice",
+    question: "삭제하려는 테이블의 기본키를 다른 테이블이 외래키로 참조하고 있을 때 올바른 처리로 가장 적절한 것은?",
+    choices: [
+      "참조되는 부모 테이블을 먼저 DROP 한다.",
+      "참조하는 자식 테이블을 먼저 DROP 하거나 외래키 제약을 해제한다.",
+      "DROP 대신 SELECT 문을 실행한다.",
+      "참조 관계와 무관하게 항상 DROP이 즉시 성공한다."
+    ],
+    answer: 1,
+    explanation: "다른 테이블이 참조 중인 부모 테이블은 바로 삭제가 거절될 수 있으므로 참조하는 테이블이나 제약을 먼저 처리해야 한다."
+  },
+  {
+    id: "f8-008",
+    chapter: "8",
+    source: "데이터정의어 슬라이드",
+    type: "short",
+    question: "테이블을 새로 생성할 때 사용하는 SQL 데이터 정의어는?",
+    answer: "CREATE TABLE",
+    alts: ["CREATE", "create table", "create"],
+    explanation: "CREATE TABLE 문은 새 테이블의 구조와 제약조건을 정의한다."
+  },
+  {
+    id: "f8-009",
+    chapter: "8",
+    source: "데이터정의어 슬라이드",
+    type: "multi",
+    question: "CREATE TABLE 문에서 정의할 수 있는 항목을 모두 고르시오.",
+    choices: [
+      "속성 이름과 데이터 타입",
+      "기본키",
+      "외래키",
+      "속성에 관한 제약조건",
+      "SELECT 결과의 중복 포함 여부"
+    ],
+    answer: [0, 1, 2, 3],
+    explanation: "CREATE 문은 속성, 속성 제약, 기본키와 외래키를 정의한다. SELECT 결과의 중복 처리는 데이터 질의 범위다."
+  },
+  {
+    id: "f8-010",
+    chapter: "8",
+    source: "데이터정의어 슬라이드",
+    type: "essay",
+    question: "DROP TABLE을 사용할 때 주의해야 할 점을 DELETE 문과 외래키 참조 관계를 포함해 서술하시오.",
+    answer: "DROP TABLE은 테이블의 구조와 데이터를 모두 삭제하므로 사용 시 주의해야 한다. 데이터만 삭제하려면 DELETE 문을 사용한다. 또한 삭제하려는 테이블의 기본키를 다른 테이블이 외래키로 참조하고 있으면 삭제가 거절될 수 있으므로, 참조하는 테이블을 먼저 삭제하거나 외래키 제약을 해제한 뒤 처리해야 한다.",
+    explanation: "핵심어: 구조와 데이터 모두 삭제, 데이터만 삭제는 DELETE, 외래키 참조 시 삭제 거절, 참조하는 테이블 또는 제약 먼저 처리."
+  },
+
+  {
+    id: "f9-001",
+    chapter: "9",
+    source: "데이터조작어 슬라이드",
+    type: "choice",
+    question: "INSERT 문에 대한 설명으로 옳은 것은?",
+    choices: [
+      "테이블에 새로운 투플을 삽입하는 명령이다.",
+      "테이블 구조를 삭제하는 명령이다.",
+      "특정 속성값을 수정하는 명령이다.",
+      "두 질의 결과의 교집합을 구하는 명령이다."
+    ],
+    answer: 0,
+    explanation: "INSERT 문은 테이블에 새로운 투플을 삽입하는 데이터 조작어다."
+  },
+  {
+    id: "f9-002",
+    chapter: "9",
+    source: "데이터조작어 슬라이드",
+    type: "choice",
+    question: "INSERT 문에서 속성 이름을 생략할 때 주의해야 할 점은?",
+    choices: [
+      "데이터 입력 순서는 테이블 속성 순서와 일치해야 한다.",
+      "모든 입력값은 자동으로 NULL이 된다.",
+      "기본키 속성은 반드시 생략해야 한다.",
+      "외래키 제약조건은 항상 무시된다."
+    ],
+    answer: 0,
+    explanation: "속성 이름을 생략하면 VALUES에 넣는 데이터 순서가 테이블의 속성 순서와 일치해야 한다."
+  },
+  {
+    id: "f9-003",
+    chapter: "9",
+    source: "데이터조작어 슬라이드",
+    type: "choice",
+    question: "INSERT 문에서 몇 개의 속성만 명시하고 나머지 속성을 입력하지 않으면, 입력하지 않은 속성값은 일반적으로 어떻게 저장되는가?",
+    choices: ["0", "NULL", "빈 문자열", "테이블 이름"],
+    answer: 1,
+    explanation: "슬라이드는 도서 가격을 입력하지 않은 경우 가격이 0이 아니라 NULL로 저장된다고 설명한다."
+  },
+  {
+    id: "f9-004",
+    chapter: "9",
+    source: "데이터조작어 슬라이드",
+    type: "ox",
+    question: "INSERT 문은 SELECT 문을 사용하여 다른 테이블에서 읽은 데이터를 삽입하는 형태로 작성할 수도 있다.",
+    answer: "O",
+    explanation: "INSERT INTO ... SELECT ... 형태로 조회 결과를 대상 테이블에 삽입할 수 있다."
+  },
+  {
+    id: "f9-005",
+    chapter: "9",
+    source: "데이터조작어 슬라이드",
+    type: "choice",
+    question: "UPDATE 문에 대한 설명으로 옳은 것은?",
+    choices: [
+      "테이블에 새로운 속성을 추가하는 명령이다.",
+      "특정 속성값을 수정하는 명령이다.",
+      "테이블의 구조와 데이터를 모두 삭제하는 명령이다.",
+      "릴레이션을 정규형으로 분해하는 명령이다."
+    ],
+    answer: 1,
+    explanation: "UPDATE 문은 조건에 맞는 기존 투플의 특정 속성값을 수정한다."
+  },
+  {
+    id: "f9-006",
+    chapter: "9",
+    source: "데이터조작어 슬라이드",
+    type: "ox",
+    question: "UPDATE 문에서 WHERE 조건을 생략하면 테이블의 모든 투플이 수정될 수 있다.",
+    answer: "O",
+    explanation: "UPDATE나 DELETE에서 검색조건을 생략하면 전체 투플에 영향을 줄 수 있으므로 주의해야 한다."
+  },
+  {
+    id: "f9-007",
+    chapter: "9",
+    source: "데이터조작어 슬라이드",
+    type: "choice",
+    question: "DELETE 문에 대한 설명으로 옳은 것은?",
+    choices: [
+      "테이블에 있는 기존 투플을 삭제하는 명령이다.",
+      "테이블의 속성 제약조건만 변경하는 명령이다.",
+      "새 테이블 구조를 정의하는 명령이다.",
+      "집계 함수의 결과를 그룹별로 묶는 명령이다."
+    ],
+    answer: 0,
+    explanation: "DELETE 문은 조건에 해당하는 기존 투플을 삭제하는 데이터 조작어다."
+  },
+  {
+    id: "f9-008",
+    chapter: "9",
+    source: "데이터조작어 슬라이드",
+    type: "choice",
+    question: "DELETE 문에서 검색조건을 생략하면 어떻게 되는가?",
+    choices: [
+      "아무 투플도 삭제되지 않는다.",
+      "테이블의 모든 투플이 삭제된다.",
+      "테이블 구조까지 자동으로 삭제된다.",
+      "기본키 속성만 NULL로 바뀐다."
+    ],
+    answer: 1,
+    explanation: "DELETE 문은 검색조건에 해당되는 투플을 삭제하며, 조건이 없으면 모든 투플을 삭제한다."
+  },
+  {
+    id: "f9-009",
+    chapter: "9",
+    source: "데이터조작어 슬라이드",
+    type: "choice",
+    question: "Customer 테이블의 custid가 Orders 테이블에서 외래키로 참조되고 있을 때, 참조 중인 고객 투플 삭제가 실패할 수 있는 이유는?",
+    choices: [
+      "집계 함수는 NULL을 제외하기 때문이다.",
+      "참조 무결성 제약이 해제되지 않으면 데이터 삭제가 중지될 수 있기 때문이다.",
+      "DELETE 문은 항상 테이블 구조를 먼저 삭제하기 때문이다.",
+      "UPDATE 문만 외래키를 검사하기 때문이다."
+    ],
+    answer: 1,
+    explanation: "다른 테이블이 외래키로 참조 중인 값을 삭제하면 참조 무결성 제약 때문에 삭제가 거절될 수 있다."
+  },
+  {
+    id: "f9-010",
+    chapter: "9",
+    source: "데이터조작어 슬라이드",
+    type: "multi",
+    question: "데이터 조작어 명령과 역할의 연결로 옳은 것을 모두 고르시오.",
+    choices: [
+      "INSERT - 새로운 투플 삽입",
+      "UPDATE - 특정 속성값 수정",
+      "DELETE - 기존 투플 삭제",
+      "DROP - 조건에 해당하는 투플만 삭제",
+      "ALTER - SELECT 결과를 그룹화"
+    ],
+    answer: [0, 1, 2],
+    explanation: "INSERT, UPDATE, DELETE가 데이터 조작어의 삽입, 수정, 삭제에 해당한다. DROP과 ALTER는 데이터 정의어다."
+  },
+
+  {
+    id: "f10-001",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "choice",
+    question: "집계 함수에 대한 설명으로 옳은 것은?",
+    choices: [
+      "테이블의 각 열에 대해 계산하는 함수다.",
+      "테이블의 구조와 제약조건을 삭제하는 함수다.",
+      "기본키와 외래키를 새로 정의하는 함수다.",
+      "릴레이션을 제2정규형으로 분해하는 함수다."
+    ],
+    answer: 0,
+    explanation: "집계 함수는 테이블의 열 값들을 대상으로 COUNT, SUM, AVG, MIN, MAX 같은 계산을 수행한다."
+  },
+  {
+    id: "f10-002",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "choice",
+    question: "COUNT(*)와 COUNT(속성)에 대한 설명으로 옳은 것은?",
+    choices: [
+      "COUNT(*)는 NULL 값을 제외한 특정 속성의 개수만 센다.",
+      "COUNT(속성)은 해당 속성의 NULL 값을 제외하고 개수를 센다.",
+      "COUNT(속성)은 항상 COUNT(*)보다 크다.",
+      "COUNT는 행의 개수를 셀 수 없다."
+    ],
+    answer: 1,
+    explanation: "COUNT(*)는 행 수를 세고, COUNT(속성)은 해당 속성의 NULL 값을 제외한 투플 개수를 센다."
+  },
+  {
+    id: "f10-003",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "choice",
+    question: "GROUP BY 절의 용도로 가장 적절한 것은?",
+    choices: [
+      "테이블 자체를 삭제한다.",
+      "같은 속성값을 가진 행들을 그룹으로 묶어 집계할 수 있게 한다.",
+      "모든 외래키 제약조건을 제거한다.",
+      "부속질의를 반드시 단일행 단일열로 바꾼다."
+    ],
+    answer: 1,
+    explanation: "GROUP BY는 지정한 속성값이 같은 행들을 그룹화하여 그룹별 집계 결과를 구할 때 사용한다."
+  },
+  {
+    id: "f10-004",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "choice",
+    question: "그룹별 집계 결과에 조건을 적용할 때 일반적으로 사용하는 절은?",
+    choices: ["WHERE", "HAVING", "DROP", "ALTER"],
+    answer: 1,
+    explanation: "WHERE는 개별 행 조건에 사용하고, HAVING은 GROUP BY로 만든 그룹의 집계 결과 조건에 사용한다."
+  },
+  {
+    id: "f10-005",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "choice",
+    question: "조인(join)에 대한 설명으로 옳은 것은?",
+    choices: [
+      "한 테이블의 행을 다른 테이블의 행에 연결해 두 개 이상의 테이블을 결합하는 연산이다.",
+      "테이블 구조와 데이터를 모두 삭제하는 연산이다.",
+      "릴레이션의 모든 속성을 원자 값으로 만드는 정규형이다.",
+      "검색조건 없이 항상 하나의 행만 반환하는 부속질의다."
+    ],
+    answer: 0,
+    explanation: "조인은 두 개 이상의 테이블을 관련 조건으로 연결해 함께 조회하는 연산이다."
+  },
+  {
+    id: "f10-006",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "ox",
+    question: "두 테이블을 조건 없이 조인하면 각 행이 서로 모두 연결되는 형태의 결과가 만들어질 수 있다.",
+    answer: "O",
+    explanation: "조인 조건 없이 테이블을 연결하면 카티션 프로덕트처럼 가능한 행 조합이 모두 만들어질 수 있다."
+  },
+  {
+    id: "f10-007",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "choice",
+    question: "부속질의에 대한 설명으로 옳은 것은?",
+    choices: [
+      "SQL 문 안에 포함된 또 다른 SQL 질의이며 결과는 테이블로 반환된다.",
+      "DROP TABLE의 다른 이름이다.",
+      "항상 결과가 다중행 다중열이어야 한다.",
+      "외래키 제약조건을 정의할 때만 사용할 수 있다."
+    ],
+    answer: 0,
+    explanation: "부속질의는 다른 SQL 문 안에 포함된 SELECT 문이며, 결과는 테이블 형태로 반환된다."
+  },
+  {
+    id: "f10-008",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "multi",
+    question: "부속질의 결과 테이블의 가능한 형태를 모두 고르시오.",
+    choices: [
+      "단일행-단일열",
+      "다중행-단일열",
+      "단일행-다중열",
+      "다중행-다중열",
+      "행과 열이 모두 없는 파일 경로"
+    ],
+    answer: [0, 1, 2, 3],
+    explanation: "부속질의 결과는 1x1, nx1, 1xn, nxn 형태의 테이블 중 하나가 될 수 있다."
+  },
+  {
+    id: "f10-009",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "short",
+    question: "부속질의 결과가 다중행-단일열로 여러 값을 반환할 때 비교에 사용하는 키워드는?",
+    answer: "IN",
+    alts: ["in"],
+    explanation: "여러 값을 반환하는 다중행-단일열 부속질의에는 IN 키워드를 사용할 수 있다."
+  },
+  {
+    id: "f10-010",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "choice",
+    question: "상관(correlated) 부속질의의 특징으로 옳은 것은?",
+    choices: [
+      "상위 질의와 하위 질의가 독립적이지 않고 서로 관련을 맺고 있다.",
+      "하위 질의가 반드시 DROP 문이어야 한다.",
+      "하위 질의가 외부 질의의 속성을 절대 참조하지 않는다.",
+      "항상 GROUP BY 없이만 사용할 수 있다."
+    ],
+    answer: 0,
+    explanation: "상관 부속질의는 하위 질의가 상위 질의의 현재 행과 관련되어 실행되는 형태다."
+  },
+  {
+    id: "f10-011",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "choice",
+    question: "UNION과 UNION ALL에 대한 설명으로 옳은 것은?",
+    choices: [
+      "UNION ALL은 중복을 포함하여 모든 결과를 구한다.",
+      "UNION은 테이블 구조와 데이터를 모두 삭제한다.",
+      "UNION ALL은 항상 교집합만 반환한다.",
+      "UNION은 외래키 제약조건을 추가한다."
+    ],
+    answer: 0,
+    explanation: "UNION은 합집합 연산이며, UNION ALL은 중복을 포함해 두 질의의 모든 결과를 반환한다."
+  },
+  {
+    id: "f10-012",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "choice",
+    question: "SQL 집합 연산의 의미 연결로 옳은 것은?",
+    choices: [
+      "UNION - 합집합",
+      "INTERSECT - 차집합",
+      "MINUS - 교집합",
+      "EXISTS - 테이블 삭제"
+    ],
+    answer: 0,
+    explanation: "UNION은 합집합, MINUS는 차집합, INTERSECT는 교집합을 나타낸다."
+  },
+  {
+    id: "f10-013",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "choice",
+    question: "EXISTS에 대한 설명으로 옳은 것은?",
+    choices: [
+      "부속질의문의 어떤 행이 조건을 만족해 존재하면 참으로 평가된다.",
+      "항상 중복을 포함한 합집합을 반환한다.",
+      "테이블의 모든 투플을 삭제한다.",
+      "속성의 데이터 타입을 변경한다."
+    ],
+    answer: 0,
+    explanation: "EXISTS는 조건에 맞는 투플이 존재하면 참이 되며, NOT EXISTS와 함께 상관 부속질의에서 자주 사용된다."
+  },
+  {
+    id: "f10-014",
+    chapter: "10",
+    source: "SELECT 고급 슬라이드",
+    type: "essay",
+    question: "부속질의와 상관 부속질의의 차이를 설명하고, 다중행-단일열 부속질의와 EXISTS 사용 시점을 서술하시오.",
+    answer: "부속질의는 SQL 문 안에 포함된 또 다른 SELECT 문으로 결과를 테이블로 반환한다. 일반 부속질의는 상위 질의와 독립적으로 평가될 수 있지만, 상관 부속질의는 상위 질의의 현재 행과 하위 질의가 서로 관련되어 있다. 부속질의가 다중행-단일열로 여러 값을 반환하면 IN 키워드를 사용해 비교할 수 있다. EXISTS는 하위 질의에서 조건을 만족하는 행이 존재하는지만 검사할 때 사용하며, NOT EXISTS와 함께 상관 부속질의 형태로 자주 사용된다.",
+    explanation: "핵심어: SQL 안의 SELECT, 결과는 테이블, 상위/하위 질의 관련성, IN, EXISTS, NOT EXISTS."
+  }
+];
+const QUERY_POOL = [
+  {
+    id: "q8-001",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "essay",
+    question: "NewBook 테이블을 생성하는 기본 CREATE 문을 쓰시오. 속성은 bookid INTEGER, bookname VARCHAR(20), publisher VARCHAR(20), price INTEGER이다.",
+    answer: "CREATE TABLE NewBook (\n  bookid INTEGER,\n  bookname VARCHAR(20),\n  publisher VARCHAR(20),\n  price INTEGER\n);",
+    explanation: "속성 이름과 데이터 타입의 순서를 암기한다. 제약조건이 없는 기본 CREATE TABLE 문이다."
+  },
+  {
+    id: "q8-002",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "essay",
+    question: "NewBook 테이블을 생성하면서 bookid를 기본키로 지정하는 CREATE 문을 쓰시오.",
+    answer: "CREATE TABLE NewBook (\n  bookid INTEGER,\n  bookname VARCHAR(20),\n  publisher VARCHAR(20),\n  price INTEGER,\n  PRIMARY KEY (bookid)\n);",
+    explanation: "기본키는 마지막에 PRIMARY KEY (bookid)로 지정하거나 bookid INTEGER PRIMARY KEY처럼 속성 정의 안에 쓸 수 있다."
+  },
+  {
+    id: "q8-003",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "essay",
+    question: "bookname과 publisher를 복합 기본키로 지정하는 NewBook CREATE 문을 쓰시오.",
+    answer: "CREATE TABLE NewBook (\n  bookname VARCHAR(20),\n  publisher VARCHAR(20),\n  price INTEGER,\n  PRIMARY KEY (bookname, publisher)\n);",
+    explanation: "복합키는 PRIMARY KEY (bookname, publisher)처럼 괄호 안에 여러 속성을 함께 쓴다."
+  },
+  {
+    id: "q8-004",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "essay",
+    question: "NewCustomer 테이블을 생성하시오. custid는 INTEGER 기본키, name과 address는 VARCHAR(40), phone은 VARCHAR(30)이다.",
+    answer: "CREATE TABLE NewCustomer (\n  custid INTEGER PRIMARY KEY,\n  name VARCHAR(40),\n  address VARCHAR(40),\n  phone VARCHAR(30)\n);",
+    explanation: "NewCustomer 예제는 custid INTEGER PRIMARY KEY와 name/address/phone 속성을 암기한다."
+  },
+  {
+    id: "q8-005",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "essay",
+    question: "NewOrders 테이블을 생성하시오. orderid 기본키, custid는 NewCustomer(custid)를 참조하는 외래키이며 ON DELETE CASCADE를 포함한다.",
+    answer: "CREATE TABLE NewOrders (\n  orderid INTEGER,\n  custid INTEGER NOT NULL,\n  bookid INTEGER NOT NULL,\n  saleprice INTEGER,\n  orderdate DATE,\n  PRIMARY KEY (orderid),\n  FOREIGN KEY (custid) REFERENCES NewCustomer(custid) ON DELETE CASCADE\n);",
+    explanation: "외래키 문장은 FOREIGN KEY (custid) REFERENCES NewCustomer(custid) ON DELETE CASCADE 순서로 암기한다."
+  },
+  {
+    id: "q8-006",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "multi",
+    question: "다음 ALTER 문과 기능 연결로 옳은 것을 모두 고르시오.",
+    choices: [
+      "ALTER TABLE NewBook ADD isbn VARCHAR(13); - isbn 속성 추가",
+      "ALTER TABLE NewBook MODIFY isbn INTEGER; - isbn 데이터 타입 변경",
+      "ALTER TABLE NewBook DROP COLUMN isbn; - isbn 속성 삭제",
+      "ALTER TABLE NewBook ADD PRIMARY KEY (bookid); - bookid 기본키 제약 추가",
+      "ALTER TABLE NewBook DROP COLUMN isbn; - NewBook 테이블 전체 삭제"
+    ],
+    answer: [0, 1, 2, 3],
+    explanation: "DROP COLUMN은 속성 삭제이고, 테이블 전체 삭제는 DROP TABLE NewBook이다."
+  },
+  {
+    id: "q8-007",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "essay",
+    question: "NewBook 테이블의 bookname 속성에 NOT NULL 제약을 추가하는 ALTER 문을 쓰시오.",
+    answer: "ALTER TABLE NewBook MODIFY bookname VARCHAR(20) NOT NULL;",
+    explanation: "슬라이드 예제는 MODIFY bookname VARCHAR(20) NOT NULL 형태다."
+  },
+  {
+    id: "q8-008",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "essay",
+    question: "NewCustomer를 삭제하려는데 NewOrders가 이를 참조한다. 참조 테이블까지 고려해 삭제 순서의 DROP 문을 쓰시오.",
+    answer: "DROP TABLE NewOrders;\nDROP TABLE NewCustomer;",
+    explanation: "참조되는 테이블을 삭제하려면 외래키로 참조하는 NewOrders를 먼저 삭제한 뒤 NewCustomer를 삭제한다."
+  },
+  {
+    id: "q9-001",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "essay",
+    question: "Book 테이블에 bookid 11, bookname '스포츠 의학', publisher '한솔의학서적', price 90000인 도서를 삽입하는 INSERT 문을 쓰시오.",
+    answer: "INSERT INTO Book(bookid, bookname, publisher, price)\nVALUES (11, '스포츠 의학', '한솔의학서적', 90000);",
+    explanation: "INSERT INTO 테이블(속성들) VALUES (값들) 순서로 쓴다."
+  },
+  {
+    id: "q9-002",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "essay",
+    question: "Book 테이블에 bookid 14, bookname '스포츠 의학', publisher '한솔의학서적'만 입력하고 price는 NULL로 저장되게 하는 INSERT 문을 쓰시오.",
+    answer: "INSERT INTO Book(bookid, bookname, publisher)\nVALUES (14, '스포츠 의학', '한솔의학서적');",
+    explanation: "명시하지 않은 price 속성은 NULL로 저장된다."
+  },
+  {
+    id: "q9-003",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "essay",
+    question: "Book 테이블에 bookid 13, bookname '스포츠 의학', price 90000, publisher '한솔의학서적' 순서로 값을 넣는 INSERT 문을 쓰시오.",
+    answer: "INSERT INTO Book(bookid, bookname, price, publisher)\nVALUES (13, '스포츠 의학', 90000, '한솔의학서적');",
+    explanation: "속성명을 명시하면 테이블 정의 순서와 다르게 값을 넣을 수 있다. 속성 목록과 VALUES 순서가 맞아야 한다."
+  },
+  {
+    id: "q9-004",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "essay",
+    question: "Imported_book 테이블의 bookid, bookname, price, publisher 값을 읽어 Book 테이블에 삽입하는 INSERT-SELECT 문을 쓰시오.",
+    answer: "INSERT INTO Book(bookid, bookname, price, publisher)\nSELECT bookid, bookname, price, publisher\nFROM Imported_book;",
+    explanation: "INSERT 문은 SELECT 결과를 이용해 여러 투플을 한 번에 삽입할 수 있다."
+  },
+  {
+    id: "q9-005",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "essay",
+    question: "Customer 테이블에서 custid가 5인 고객의 address를 '대한민국 부산'으로 수정하는 UPDATE 문을 쓰시오.",
+    answer: "UPDATE Customer\nSET address = '대한민국 부산'\nWHERE custid = 5;",
+    explanation: "UPDATE 테이블 SET 속성=값 WHERE 조건 순서다. WHERE가 없으면 전체 투플이 수정될 수 있다."
+  },
+  {
+    id: "q9-006",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "essay",
+    question: "Book 테이블의 bookid 14인 도서의 publisher를 Imported_book에서 bookid 21인 도서의 publisher 값으로 바꾸는 UPDATE 문을 쓰시오.",
+    answer: "UPDATE Book\nSET publisher = (SELECT publisher FROM Imported_book WHERE bookid = 21)\nWHERE bookid = 14;",
+    explanation: "UPDATE의 SET 값 위치에 부속질의를 사용할 수 있다."
+  },
+  {
+    id: "q9-007",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "essay",
+    question: "Book 테이블에서 bookid가 11인 도서를 삭제하는 DELETE 문을 쓰시오.",
+    answer: "DELETE FROM Book\nWHERE bookid = 11;",
+    explanation: "DELETE FROM 테이블 WHERE 조건 순서다. WHERE가 없으면 모든 투플이 삭제된다."
+  },
+  {
+    id: "q9-008",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "choice",
+    question: "Customer 테이블의 모든 투플을 삭제하려는 DELETE 문은 무엇인가?",
+    choices: [
+      "DELETE FROM Customer;",
+      "DROP TABLE Customer;",
+      "ALTER TABLE Customer DROP COLUMN custid;",
+      "UPDATE Customer SET custid = NULL;"
+    ],
+    answer: 0,
+    explanation: "DELETE FROM Customer는 모든 고객 투플 삭제다. 단, Orders가 Customer.custid를 외래키로 참조하면 제약 때문에 실패할 수 있다."
+  },
+  {
+    id: "q10-001",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "고객번호 2인 고객이 주문한 도서의 총판매액을 구하는 SQL 문을 쓰시오.",
+    answer: "SELECT SUM(saleprice) AS 총매출\nFROM Orders\nWHERE custid = 2;",
+    explanation: "SUM 집계 함수와 WHERE custid = 2 조건을 함께 사용한다."
+  },
+  {
+    id: "q10-002",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "고객이 주문한 도서의 총판매액, 평균값, 최솟값, 최댓값을 구하는 SQL 문을 쓰시오.",
+    answer: "SELECT SUM(saleprice) AS Total,\n       AVG(saleprice) AS Average,\n       MIN(saleprice) AS Minimum,\n       MAX(saleprice) AS Maximum\nFROM Orders;",
+    explanation: "SUM, AVG, MIN, MAX 집계 함수의 대표 예제다."
+  },
+  {
+    id: "q10-003",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "고객별로 주문한 도서 수량과 총액을 구하는 GROUP BY SQL 문을 쓰시오.",
+    answer: "SELECT custid, COUNT(*) AS 도서수량, SUM(saleprice) AS 총액\nFROM Orders\nGROUP BY custid;",
+    explanation: "고객별 집계는 GROUP BY custid를 사용한다."
+  },
+  {
+    id: "q10-004",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "가격이 8,000원 이상인 도서를 구매한 고객에 대해 고객별 주문 도서 수량을 구하되, 2권 이상 구매한 고객만 출력하는 SQL 문을 쓰시오.",
+    answer: "SELECT custid, COUNT(*) AS 도서수량\nFROM Orders\nWHERE saleprice >= 8000\nGROUP BY custid\nHAVING COUNT(*) >= 2;",
+    explanation: "개별 주문 조건은 WHERE, 그룹 집계 조건은 HAVING에 둔다."
+  },
+  {
+    id: "q10-005",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "고객과 고객이 주문한 도서의 판매가격을 검색하는 조인 SQL 문을 쓰시오. Customer와 Orders를 사용한다.",
+    answer: "SELECT name, saleprice\nFROM Customer, Orders\nWHERE Customer.custid = Orders.custid;",
+    explanation: "Customer와 Orders를 custid로 조인하고 name, saleprice를 조회한다."
+  },
+  {
+    id: "q10-006",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "고객별로 주문한 모든 도서의 총판매액을 구하고 고객별로 정렬하는 SQL 문을 쓰시오.",
+    answer: "SELECT name, SUM(saleprice)\nFROM Customer, Orders\nWHERE Customer.custid = Orders.custid\nGROUP BY Customer.name;",
+    explanation: "고객 이름별로 묶어 SUM(saleprice)를 구한다."
+  },
+  {
+    id: "q10-007",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "고객의 이름과 고객이 주문한 도서의 이름을 구하는 3개 테이블 조인 SQL 문을 쓰시오.",
+    answer: "SELECT Customer.name, Book.bookname\nFROM Customer, Orders, Book\nWHERE Customer.custid = Orders.custid\n  AND Orders.bookid = Book.bookid;",
+    explanation: "Customer-Orders는 custid로, Orders-Book은 bookid로 조인한다."
+  },
+  {
+    id: "q10-008",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "가격이 20,000원인 도서를 주문한 고객의 이름과 도서의 이름을 구하는 SQL 문을 쓰시오.",
+    answer: "SELECT Customer.name, Book.bookname\nFROM Customer, Orders, Book\nWHERE Customer.custid = Orders.custid\n  AND Orders.bookid = Book.bookid\n  AND Book.price = 20000;",
+    explanation: "3개 테이블 조인 조건에 Book.price = 20000 조건을 추가한다."
+  },
+  {
+    id: "q10-009",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "도서를 구매하지 않은 고객까지 포함하여 고객의 이름과 주문한 도서의 판매가격을 구하는 외부 조인 SQL 문을 쓰시오.",
+    answer: "SELECT Customer.name, saleprice\nFROM Customer LEFT OUTER JOIN Orders ON Customer.custid = Orders.custid;",
+    explanation: "구매하지 않은 고객도 포함하려면 Customer를 기준으로 LEFT OUTER JOIN을 사용한다."
+  },
+  {
+    id: "q10-010",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "가장 비싼 도서의 이름을 구하는 부속질의 SQL 문을 쓰시오.",
+    answer: "SELECT bookname\nFROM Book\nWHERE price = (SELECT MAX(price) FROM Book);",
+    explanation: "MAX(price)를 구하는 부속질의를 WHERE의 비교값으로 사용한다."
+  },
+  {
+    id: "q10-011",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "도서를 구매한 적이 있는 고객의 이름을 구하는 IN 부속질의 SQL 문을 쓰시오.",
+    answer: "SELECT name\nFROM Customer\nWHERE custid IN (SELECT custid FROM Orders);",
+    explanation: "Orders에 존재하는 custid 집합과 Customer.custid를 IN으로 비교한다."
+  },
+  {
+    id: "q10-012",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "대한미디어에서 출판한 도서를 구매한 고객의 이름을 구하는 중첩 부속질의 SQL 문을 쓰시오.",
+    answer: "SELECT name\nFROM Customer\nWHERE custid IN (\n  SELECT custid\n  FROM Orders\n  WHERE bookid IN (\n    SELECT bookid\n    FROM Book\n    WHERE publisher = '대한미디어'\n  )\n);",
+    explanation: "Book에서 대한미디어 bookid를 찾고, Orders에서 해당 bookid를 주문한 custid를 찾은 뒤 Customer 이름을 구한다."
+  },
+  {
+    id: "q10-013",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "출판사별 평균 도서 가격보다 비싼 도서의 이름을 구하는 상관 부속질의 SQL 문을 쓰시오.",
+    answer: "SELECT b1.bookname\nFROM Book b1\nWHERE b1.price > (\n  SELECT AVG(b2.price)\n  FROM Book b2\n  WHERE b2.publisher = b1.publisher\n);",
+    explanation: "하위 질의가 상위 질의의 b1.publisher를 참조하므로 상관 부속질의다."
+  },
+  {
+    id: "q10-014",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "대한민국에 거주하는 고객 이름과 도서를 주문한 고객 이름의 합집합을 구하는 UNION SQL 문을 쓰시오.",
+    answer: "SELECT name\nFROM Customer\nWHERE address LIKE '대한민국%'\nUNION\nSELECT name\nFROM Customer\nWHERE custid IN (SELECT custid FROM Orders);",
+    explanation: "UNION은 중복을 제거한 합집합이다. 중복까지 포함하려면 UNION ALL을 사용한다."
+  },
+  {
+    id: "q10-015",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "대한민국에 거주하는 고객 중 도서를 주문한 적이 없는 고객의 이름을 구하는 MINUS SQL 문을 쓰시오.",
+    answer: "SELECT name\nFROM Customer\nWHERE address LIKE '대한민국%'\nMINUS\nSELECT name\nFROM Customer\nWHERE custid IN (SELECT custid FROM Orders);",
+    explanation: "MINUS는 앞 질의 결과에서 뒤 질의 결과를 뺀 차집합이다."
+  },
+  {
+    id: "q10-016",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "대한민국에 거주하면서 도서를 주문한 고객의 이름을 구하는 INTERSECT SQL 문을 쓰시오.",
+    answer: "SELECT name\nFROM Customer\nWHERE address LIKE '대한민국%'\nINTERSECT\nSELECT name\nFROM Customer\nWHERE custid IN (SELECT custid FROM Orders);",
+    explanation: "INTERSECT는 두 질의 결과의 교집합이다."
+  },
+  {
+    id: "q10-017",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "주문이 있는 고객의 이름과 주소를 EXISTS를 사용해 구하는 SQL 문을 쓰시오.",
+    answer: "SELECT name, address\nFROM Customer cs\nWHERE EXISTS (\n  SELECT *\n  FROM Orders od\n  WHERE cs.custid = od.custid\n);",
+    explanation: "EXISTS는 하위 질의에서 조건을 만족하는 행이 존재하면 참이다."
+  },
+  {
+    id: "q10-018",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "multi",
+    question: "부속질의 연산자 설명으로 옳은 것을 모두 고르시오.",
+    choices: [
+      "IN - 부속질의 결과 중 일치하는 값이 있으면 참",
+      "NOT IN - 부속질의 결과 중 일치하는 값이 없으면 참",
+      "EXISTS - 부속질의 결과 행이 하나라도 존재하면 참",
+      "NOT EXISTS - 부속질의 결과 행이 하나도 존재하지 않으면 참",
+      "ANY/SOME - 모든 비교 결과가 참이어야 참"
+    ],
+    answer: [0, 1, 2, 3],
+    explanation: "ANY/SOME은 비교 결과 중 하나라도 참이면 참이고, ALL은 모든 비교 결과가 참이어야 참이다."
+  },
+  {
+    id: "q8-009",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "essay",
+    question: "NewBook 테이블을 생성하되 bookname은 NOT NULL, publisher는 UNIQUE, price는 기본값 10000과 CHECK(price >= 1000), 기본키는 (bookname, publisher)로 지정하는 CREATE 문을 쓰시오.",
+    answer: "CREATE TABLE NewBook (\n  bookname VARCHAR(20) NOT NULL,\n  publisher VARCHAR(20) UNIQUE,\n  price INTEGER DEFAULT 10000 CHECK(price >= 1000),\n  PRIMARY KEY (bookname, publisher)\n);",
+    explanation: "PDF 예제의 복합 제약조건 문장이다. NOT NULL, UNIQUE, DEFAULT, CHECK, PRIMARY KEY 위치를 암기한다."
+  },
+  {
+    id: "q8-010",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "choice",
+    question: "bookname은 NULL 불가, publisher는 중복 불가, price는 기본값 10000이라는 조건을 표현한 키워드 조합으로 옳은 것은?",
+    choices: [
+      "bookname NOT NULL / publisher UNIQUE / price DEFAULT 10000",
+      "bookname UNIQUE / publisher NOT NULL / price PRIMARY 10000",
+      "bookname DEFAULT / publisher CHECK / price UNIQUE",
+      "bookname REFERENCES / publisher DROP / price CASCADE"
+    ],
+    answer: 0,
+    explanation: "NULL 불가는 NOT NULL, 중복 불가는 UNIQUE, 기본값은 DEFAULT 키워드로 표현한다."
+  },
+  {
+    id: "q8-011",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "choice",
+    question: "NewOrders의 custid가 NewCustomer(custid)를 참조하도록 하는 외래키 문장으로 옳은 것은?",
+    choices: [
+      "FOREIGN KEY (custid) REFERENCES NewCustomer(custid)",
+      "PRIMARY KEY (custid) REFERENCES NewOrders(custid)",
+      "CHECK (custid) REFERENCES NewCustomer",
+      "UNIQUE KEY (custid) CASCADE NewCustomer"
+    ],
+    answer: 0,
+    explanation: "외래키는 FOREIGN KEY (속성) REFERENCES 참조테이블(참조속성) 형식이다."
+  },
+  {
+    id: "q8-012",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "multi",
+    question: "CREATE/ALTER 문에서 제약조건 또는 속성 조건으로 쓰이는 키워드를 모두 고르시오.",
+    choices: ["NOT NULL", "UNIQUE", "DEFAULT", "CHECK", "GROUP BY"],
+    answer: [0, 1, 2, 3],
+    explanation: "GROUP BY는 SELECT의 그룹화 절이고, 나머지는 테이블/속성 제약과 관련된다."
+  },
+  {
+    id: "q8-013",
+    chapter: "8",
+    source: "DDL 쿼리 암기",
+    type: "choice",
+    question: "NewBook 테이블 자체를 삭제하는 SQL 문은?",
+    choices: [
+      "DROP TABLE NewBook;",
+      "DELETE FROM NewBook;",
+      "ALTER TABLE NewBook DROP COLUMN bookid;",
+      "UPDATE NewBook SET bookid = NULL;"
+    ],
+    answer: 0,
+    explanation: "DROP TABLE은 테이블 구조와 데이터를 모두 삭제한다. DELETE는 투플만 삭제한다."
+  },
+  {
+    id: "q9-009",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "choice",
+    question: "INSERT 문의 기본 문법으로 옳은 것은?",
+    choices: [
+      "INSERT INTO 테이블이름[(속성리스트)] VALUES (값리스트);",
+      "INSERT FROM 테이블이름 WHERE 조건;",
+      "UPDATE INTO 테이블이름 VALUES (값리스트);",
+      "DELETE INTO 테이블이름[(속성리스트)] VALUES (값리스트);"
+    ],
+    answer: 0,
+    explanation: "INSERT는 INSERT INTO ... VALUES ... 형식이다."
+  },
+  {
+    id: "q9-010",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "multi",
+    question: "INSERT 문에서 속성 이름을 명시하는 경우에 대한 설명으로 옳은 것을 모두 고르시오.",
+    choices: [
+      "테이블 정의 순서와 다른 순서로 값을 넣을 수 있다.",
+      "명시한 속성 순서와 VALUES 값 순서가 대응되어야 한다.",
+      "일부 속성만 입력할 수 있다.",
+      "명시하지 않은 속성은 절대로 NULL이 될 수 없다."
+    ],
+    answer: [0, 1, 2],
+    explanation: "일부 속성만 입력하면 입력하지 않은 속성은 기본값 또는 NULL이 될 수 있다."
+  },
+  {
+    id: "q9-011",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "short",
+    question: "INSERT에서 price 속성을 입력하지 않았을 때, 별도 기본값이 없다면 저장되는 특수 값은?",
+    answer: "NULL",
+    alts: ["null", "널", "널값", "NULL 값"],
+    explanation: "PDF 예제에서 도서 가격을 입력하지 않으면 0이 아니라 NULL로 저장된다."
+  },
+  {
+    id: "q9-012",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "choice",
+    question: "UPDATE 문에서 다른 테이블의 값을 이용해 수정할 때 주로 사용하는 형태는?",
+    choices: [
+      "SET 속성 = (SELECT ...)",
+      "VALUES 속성 = (DROP ...)",
+      "PRIMARY KEY 속성 = (DELETE ...)",
+      "GROUP BY 속성 = (ALTER ...)"
+    ],
+    answer: 0,
+    explanation: "UPDATE의 SET 절에 부속질의를 넣어 다른 테이블의 값을 사용할 수 있다."
+  },
+  {
+    id: "q9-013",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "multi",
+    question: "UPDATE/DELETE 문에서 WHERE 조건을 생략했을 때 발생할 수 있는 일을 모두 고르시오.",
+    choices: [
+      "UPDATE는 모든 투플을 수정할 수 있다.",
+      "DELETE는 모든 투플을 삭제할 수 있다.",
+      "외래키 제약 때문에 삭제가 중지될 수 있다.",
+      "항상 아무 변화도 일어나지 않는다."
+    ],
+    answer: [0, 1, 2],
+    explanation: "WHERE 생략은 전체 데이터에 영향을 줄 수 있다. 참조 무결성 제약이 있으면 삭제가 실패할 수도 있다."
+  },
+  {
+    id: "q9-014",
+    chapter: "9",
+    source: "DML 쿼리 암기",
+    type: "essay",
+    question: "Book 테이블에 있는 모든 투플을 삭제하되 테이블 구조는 남기는 SQL 문을 쓰시오.",
+    answer: "DELETE FROM Book;",
+    explanation: "테이블 구조를 남기고 데이터만 삭제하려면 DELETE FROM Book을 사용한다. DROP TABLE Book은 구조까지 삭제한다."
+  },
+  {
+    id: "q10-019",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "마당서점의 도서 판매 건수를 구하는 SQL 문을 쓰시오.",
+    answer: "SELECT COUNT(*)\nFROM Orders;",
+    explanation: "COUNT(*)는 행의 개수를 센다."
+  },
+  {
+    id: "q10-020",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "choice",
+    question: "COUNT(*)와 COUNT(saleprice)의 차이로 옳은 것은?",
+    choices: [
+      "COUNT(*)는 행 수를 세고, COUNT(saleprice)는 saleprice의 NULL 값을 제외하고 센다.",
+      "COUNT(*)는 항상 0을 반환한다.",
+      "COUNT(saleprice)는 NULL 값만 센다.",
+      "둘은 문법상 사용할 수 없다."
+    ],
+    answer: 0,
+    explanation: "COUNT(속성)은 해당 속성의 NULL 값을 제외하고 센다."
+  },
+  {
+    id: "q10-021",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "multi",
+    question: "SELECT 문에서 WHERE, GROUP BY, HAVING의 역할로 옳은 것을 모두 고르시오.",
+    choices: [
+      "WHERE는 개별 행을 먼저 필터링한다.",
+      "GROUP BY는 같은 값을 가진 행을 그룹으로 묶는다.",
+      "HAVING은 그룹 집계 결과에 조건을 적용한다.",
+      "HAVING은 반드시 FROM보다 먼저 작성한다."
+    ],
+    answer: [0, 1, 2],
+    explanation: "일반적인 작성 순서는 SELECT - FROM - WHERE - GROUP BY - HAVING이다."
+  },
+  {
+    id: "q10-022",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "choice",
+    question: "GROUP BY와 HAVING을 함께 쓰는 쿼리의 올바른 절 순서는?",
+    choices: [
+      "SELECT → FROM → WHERE → GROUP BY → HAVING",
+      "SELECT → HAVING → WHERE → FROM → GROUP BY",
+      "GROUP BY → SELECT → FROM → WHERE → HAVING",
+      "FROM → HAVING → SELECT → WHERE → GROUP BY"
+    ],
+    answer: 0,
+    explanation: "행 조건은 WHERE, 그룹화는 GROUP BY, 그룹 조건은 HAVING 순서로 작성한다."
+  },
+  {
+    id: "q10-023",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "choice",
+    question: "Customer와 Orders를 조건 없이 FROM Customer, Orders로 연결하면 어떤 결과가 만들어질 수 있는가?",
+    choices: [
+      "두 테이블의 가능한 모든 행 조합",
+      "공통 custid만 자동으로 연결된 결과",
+      "Orders의 모든 행 삭제",
+      "Customer의 기본키 자동 생성"
+    ],
+    answer: 0,
+    explanation: "조인 조건 없이 두 테이블을 나열하면 카티션 프로덕트처럼 가능한 모든 행 조합이 만들어질 수 있다."
+  },
+  {
+    id: "q10-024",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "multi",
+    question: "Customer, Orders, Book 세 테이블을 조인해 고객 이름과 도서 이름을 구할 때 필요한 조건을 모두 고르시오.",
+    choices: [
+      "Customer.custid = Orders.custid",
+      "Orders.bookid = Book.bookid",
+      "Customer.name = Book.bookname",
+      "Book.price = Customer.custid"
+    ],
+    answer: [0, 1],
+    explanation: "Customer-Orders는 custid, Orders-Book은 bookid로 연결한다."
+  },
+  {
+    id: "q10-025",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "choice",
+    question: "구매 이력이 없는 고객도 결과에 포함하려고 Customer를 기준으로 Orders와 조인할 때 가장 적절한 조인은?",
+    choices: ["LEFT OUTER JOIN", "INNER JOIN만 가능", "CROSS JOIN", "SELF JOIN"],
+    answer: 0,
+    explanation: "왼쪽 테이블인 Customer의 모든 행을 보존하려면 LEFT OUTER JOIN을 사용한다."
+  },
+  {
+    id: "q10-026",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "choice",
+    question: "UNION ALL에 대한 설명으로 옳은 것은?",
+    choices: [
+      "중복을 포함하여 모든 결과를 반환한다.",
+      "중복을 제거한 합집합만 반환한다.",
+      "두 결과의 교집합만 반환한다.",
+      "앞 결과에서 뒤 결과를 뺀다."
+    ],
+    answer: 0,
+    explanation: "UNION은 중복을 제거하고, UNION ALL은 중복을 포함한다."
+  },
+  {
+    id: "q10-027",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "multi",
+    question: "집합 연산 의미로 옳은 것을 모두 고르시오.",
+    choices: [
+      "UNION - 합집합",
+      "MINUS - 차집합",
+      "INTERSECT - 교집합",
+      "EXISTS - 합집합"
+    ],
+    answer: [0, 1, 2],
+    explanation: "EXISTS는 집합 연산자가 아니라 행 존재 여부를 검사하는 부속질의 조건이다."
+  },
+  {
+    id: "q10-028",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "choice",
+    question: "상관 부속질의에서 출판사별 평균 가격을 비교하기 위해 필요한 조건으로 가장 적절한 것은?",
+    choices: [
+      "b2.publisher = b1.publisher",
+      "b2.price = b1.publisher",
+      "b1.bookname = b2.price",
+      "Orders.custid = Book.publisher"
+    ],
+    answer: 0,
+    explanation: "같은 출판사 내부 평균과 비교해야 하므로 하위 질의에서 b2.publisher = b1.publisher 조건을 둔다."
+  },
+  {
+    id: "q10-029",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "short",
+    question: "부속질의 결과 행이 하나라도 존재하면 참이 되는 키워드는?",
+    answer: "EXISTS",
+    alts: ["exists"],
+    explanation: "EXISTS는 조건에 맞는 투플이 존재하면 참이다."
+  },
+  {
+    id: "q10-030",
+    chapter: "10",
+    source: "SELECT 쿼리 암기",
+    type: "essay",
+    question: "도서를 주문한 고객의 이름을 조인으로 구하는 SQL 문을 쓰시오. Customer와 Orders를 사용한다.",
+    answer: "SELECT name\nFROM Customer, Orders\nWHERE Customer.custid = Orders.custid;",
+    explanation: "IN 부속질의로도 풀 수 있지만, 조인으로는 Customer.custid = Orders.custid 조건을 사용한다."
+  }
+];
+const PAST_FINAL_POOL = [
+  {
+    id: "p7-001",
+    chapter: "7",
+    source: "작년 기말 제보",
+    type: "choice",
+    question: "작년 기말 제보형: 정규화 단계가 영어 약어로 제시되었을 때, 일반적인 순서로 옳은 것은?",
+    choices: [
+      "1NF → 2NF → 3NF → BCNF",
+      "1NF → 3NF → 2NF → BCNF",
+      "BCNF → 1NF → 2NF → 3NF",
+      "2NF → 1NF → BCNF → 3NF"
+    ],
+    answer: 0,
+    explanation: "정규화 단계는 1NF, 2NF, 3NF, BCNF 순서로 조건이 강해진다."
+  },
+  {
+    id: "p7-002",
+    chapter: "7",
+    source: "작년 기말 제보",
+    type: "choice",
+    question: "작년 기말 제보형: BCNF 바로 전 단계에 해당하는 정규형은?",
+    choices: ["1NF", "2NF", "3NF", "4NF"],
+    answer: 2,
+    explanation: "BCNF는 보통 3NF 다음에 배우는 강한 제3정규형이다."
+  },
+  {
+    id: "p7-003",
+    chapter: "7",
+    source: "작년 기말 제보",
+    type: "choice",
+    question: "작년 기말 제보형: 릴레이션의 모든 속성이 원자 값이고, 기본키가 아닌 모든 속성이 기본키에 완전 함수 종속되지만 이행적 함수 종속이 남아 있다. 이 릴레이션은 어디까지 만족하는가?",
+    choices: ["제1정규형", "제2정규형", "제3정규형", "BCNF"],
+    answer: 1,
+    explanation: "원자 값과 완전 함수 종속은 2NF 조건이다. 이행적 함수 종속이 남아 있으면 3NF는 만족하지 않는다."
+  },
+  {
+    id: "p7-004",
+    chapter: "7",
+    source: "작년 기말 제보",
+    type: "choice",
+    question: "작년 기말 제보형: 모든 결정자가 후보키가 되어야 한다는 조건을 요구하는 정규형은?",
+    choices: ["제1정규형", "제2정규형", "제3정규형", "BCNF"],
+    answer: 3,
+    explanation: "BCNF의 핵심 조건은 모든 결정자가 후보키여야 한다는 것이다."
+  },
+  {
+    id: "p7-005",
+    chapter: "7",
+    source: "작년 기말 제보",
+    type: "multi",
+    question: "작년 기말 제보형: 이상 현상(anomaly)에 해당하는 것을 모두 고르시오.",
+    choices: ["삽입 이상", "갱신 이상", "삭제 이상", "검색 이상", "그룹 이상"],
+    answer: [0, 1, 2],
+    explanation: "정규화에서 다루는 대표 이상 현상은 삽입 이상, 갱신 이상, 삭제 이상이다."
+  },
+  {
+    id: "p7-006",
+    chapter: "7",
+    source: "작년 기말 제보",
+    type: "choice",
+    question: "작년 기말 제보형: X → Y, Y → Z가 성립하여 X → Z가 논리적으로 성립하는 함수 종속은?",
+    choices: ["부분 함수 종속", "완전 함수 종속", "이행적 함수 종속", "다치 종속"],
+    answer: 2,
+    explanation: "X가 Y를 결정하고 Y가 Z를 결정하면 Z는 X에 이행적으로 함수 종속된다."
+  },
+  {
+    id: "p7-007",
+    chapter: "7",
+    source: "작년 기말 제보",
+    type: "essay",
+    question: "작년 기말 제보형: 정규화된 상태를 보고 몇 정규형인지 판단할 때 확인 순서를 서술하시오.",
+    answer: "먼저 모든 속성값이 원자 값인지 확인해 1NF 여부를 본다. 그다음 복합 기본키가 있으면 기본키의 일부에만 종속되는 부분 함수 종속이 있는지 확인해 2NF 여부를 판단한다. 이후 기본키가 아닌 속성이 다른 일반 속성을 통해 기본키에 이행적으로 종속되는지 확인해 3NF 여부를 판단한다. 마지막으로 모든 결정자가 후보키인지 확인해 BCNF 여부를 판단한다.",
+    explanation: "핵심 순서: 원자 값 → 부분 함수 종속 제거 → 이행적 함수 종속 제거 → 모든 결정자가 후보키."
+  },
+  {
+    id: "p10-001",
+    chapter: "10",
+    source: "작년 기말 제보",
+    type: "choice",
+    question: "작년 기말 제보형: SQL 집계 결과에 대한 조건을 걸 때 사용하는 절은?",
+    choices: ["WHERE", "GROUP BY", "HAVING", "ORDER BY"],
+    answer: 2,
+    explanation: "그룹별 집계 결과 조건은 HAVING 절에 작성한다."
+  },
+  {
+    id: "p10-002",
+    chapter: "10",
+    source: "작년 기말 제보",
+    type: "choice",
+    question: "작년 기말 제보형: 가격이 8000원 이상인 주문만 대상으로 고객별 주문 수량을 세고, 2건 이상인 고객만 출력할 때 필요한 절 조합으로 가장 적절한 것은?",
+    choices: [
+      "WHERE saleprice >= 8000, GROUP BY custid, HAVING COUNT(*) >= 2",
+      "HAVING saleprice >= 8000, WHERE COUNT(*) >= 2",
+      "GROUP BY saleprice, WHERE custid >= 2",
+      "ORDER BY COUNT(*), DROP saleprice"
+    ],
+    answer: 0,
+    explanation: "개별 행 조건은 WHERE, 고객별 묶음은 GROUP BY, 그룹 조건은 HAVING에 둔다."
+  },
+  {
+    id: "p10-003",
+    chapter: "10",
+    source: "작년 기말 제보",
+    type: "essay",
+    question: "작년 기말 제보형: 도서를 구매한 적이 있는 고객의 이름을 부속질의로 구하는 SQL 문을 쓰시오.",
+    answer: "SELECT name\nFROM Customer\nWHERE custid IN (SELECT custid FROM Orders);",
+    explanation: "작년 제보에 나온 서브쿼리 대비형이다. Orders에 있는 custid 집합을 IN으로 비교한다."
+  },
+  {
+    id: "p10-004",
+    chapter: "10",
+    source: "작년 기말 제보",
+    type: "choice",
+    question: "작년 기말 제보형: 부속질의 결과가 여러 행의 단일 열로 반환될 때, 같은 값이 포함되어 있는지 비교할 때 주로 사용하는 키워드는?",
+    choices: ["IN", "HAVING", "DROP", "PRIMARY KEY"],
+    answer: 0,
+    explanation: "다중행-단일열 부속질의는 IN 키워드와 함께 자주 사용된다."
+  },
+  {
+    id: "p10-005",
+    chapter: "10",
+    source: "작년 기말 제보",
+    type: "choice",
+    question: "작년 기말 제보형: 상위 질의의 현재 행 값을 하위 질의에서 참조하는 부속질의는?",
+    choices: ["상관 부속질의", "집합 연산", "외래키 제약", "정규형"],
+    answer: 0,
+    explanation: "상관 부속질의는 상위 질의와 하위 질의가 독립적이지 않고 서로 관련을 맺는다."
+  },
+  {
+    id: "p10-006",
+    chapter: "10",
+    source: "작년 기말 제보",
+    type: "multi",
+    question: "작년 기말 제보형: 쿼리 문제에서 자주 틀리는 포인트를 모두 고르시오.",
+    choices: [
+      "조인 조건을 빠뜨리면 불필요한 모든 행 조합이 생길 수 있다.",
+      "WHERE는 그룹 집계 결과 조건에만 사용한다.",
+      "HAVING은 GROUP BY 이후 집계 조건에 사용한다.",
+      "서브쿼리 결과가 여러 값이면 IN 사용을 고려한다.",
+      "DELETE에서 WHERE를 생략하면 모든 투플이 삭제될 수 있다."
+    ],
+    answer: [0, 2, 3, 4],
+    explanation: "WHERE는 개별 행 조건이다. 그룹 집계 결과 조건은 HAVING이다."
+  },
+  {
+    id: "p10-007",
+    chapter: "10",
+    source: "작년 기말 제보",
+    type: "essay",
+    question: "작년 기말 제보형: HAVING과 부속질의가 시험에 나왔다는 제보를 기준으로, 각각 어떤 상황에서 쓰는지 한 문장씩 쓰시오.",
+    answer: "HAVING은 GROUP BY로 묶은 그룹의 집계 결과에 조건을 걸 때 사용한다. 부속질의는 한 SQL 문 안에서 다른 SELECT 문의 결과를 조건값이나 비교 대상 집합으로 사용할 때 사용한다.",
+    explanation: "핵심어: 그룹 집계 조건, SQL 안의 SELECT, 조건값, 비교 대상 집합."
+  }
+];
 const POOL = [
   ...CHECK_POOL.map(q => ({ bank: "check", ...q })),
   ...LECTURE_POOL.map(q => ({ bank: "lecture", ...q })),
-  ...EXTRA_POOL.map(q => ({ bank: "extra", ...q }))
+  ...EXTRA_POOL.map(q => ({ bank: "extra", ...q })),
+  ...FINAL_POOL.map(q => ({ bank: "final", ...q })),
+  ...QUERY_POOL.map(q => ({ bank: "query", ...q })),
+  ...PAST_FINAL_POOL.map(q => ({ bank: "past", ...q }))
 ];
 const TYPE_LABEL = { choice: '객관식', multi: '복수선택', ox: 'OX', short: '단답형', essay: '서술형' };
 const TYPE_ORDER = ['choice', 'multi', 'ox', 'short', 'essay'];
-const SOURCE_LABEL = { all: '전체 자료', check: '체크문제+예상 대비', lecture: '강의 슬라이드', extra: '예상 대비' };
-const SOURCE_ORDER = ['check', 'lecture'];
+const SOURCE_LABEL = { all: '전체 시험범위', final: '기말고사', past: '작년 기말 제보', query: '쿼리 암기', midterm: '중간고사' };
+const SOURCE_ORDER = ['final', 'past', 'query', 'midterm'];
 const CHAPTERS = [...new Set(POOL.map(q => q.chapter))].sort((a, b) => Number(a) - Number(b));
+const MIDTERM_CHECK_IDS = new Set([
+  "c6-001",
+  "c6-002",
+  "c6-005",
+  "c6-006"
+]);
+const MIDTERM_LECTURE_IDS = new Set([
+  "l6-001",
+  "l6-002",
+  "l6-003",
+  "l6-004",
+  "l6-006",
+  "l6-007",
+  "l6-008",
+  "l6-009",
+  "l6-010",
+  "l6-011",
+  "l6-012"
+]);
 
 function shuffle(arr) {
   const a = arr.slice();
@@ -2401,10 +4369,21 @@ function normalize(s) {
 function typeLabel(type) { return TYPE_LABEL[type] || type; }
 function typeClass(type) { return 'type-' + type; }
 function isAutoGraded(q) { return q.type !== 'essay'; }
+function isMidtermQuestion(q) {
+  if ((q.bank === 'check' || q.bank === 'lecture') && Number(q.chapter) <= 5) return true;
+  if (MIDTERM_CHECK_IDS.has(q.id) || MIDTERM_LECTURE_IDS.has(q.id)) return true;
+  return q.bank === 'extra' && q.chapter === '4';
+}
+function isFinalQuestion(q) {
+  return q.bank === 'final' || q.bank === 'query' || q.bank === 'past' || q.source === '체크문제(7)';
+}
 function sourceMatches(q, source) {
-  if (source === 'all') return true;
-  if (source === 'check') return q.bank === 'check' || q.bank === 'extra';
-  return q.bank === source;
+  if (source === 'all') return isMidtermQuestion(q) || isFinalQuestion(q);
+  if (source === 'midterm') return isMidtermQuestion(q);
+  if (source === 'final') return isFinalQuestion(q);
+  if (source === 'past') return q.bank === 'past';
+  if (source === 'query') return q.bank === 'query';
+  return false;
 }
 
 const state = {
@@ -2412,7 +4391,7 @@ const state = {
   answers: {},
   revealed: {},
   correct: {},
-  sourceFilter: 'check',
+  sourceFilter: 'final',
   chapterFilter: 'all',
   typeFilter: 'all',
   countMode: '20',
@@ -2846,7 +4825,7 @@ function renderMode() {
 function renderFilters() {
   const sourceBar = document.getElementById('source-filter');
   const sourceItems = ['all', ...SOURCE_ORDER];
-  sourceBar.innerHTML = sourceItems.map(source => {
+  sourceBar.innerHTML = '<span class="mode-label">범위:</span>' + sourceItems.map(source => {
     const n = filteredCount({ source });
     const label = `${SOURCE_LABEL[source]} (${n})`;
     const cls = state.sourceFilter === source ? 'filter-btn active' : 'filter-btn';
@@ -2854,8 +4833,9 @@ function renderFilters() {
   }).join('');
 
   const chapterBar = document.getElementById('chapter-filter');
-  const chapterItems = ['all', ...CHAPTERS];
-  chapterBar.innerHTML = chapterItems.map(ch => {
+  const visibleChapters = CHAPTERS.filter(ch => filteredCount({ chapter: ch }) > 0 || state.chapterFilter === ch);
+  const chapterItems = ['all', ...visibleChapters];
+  chapterBar.innerHTML = '<span class="mode-label">장:</span>' + chapterItems.map(ch => {
     const n = filteredCount({ chapter: ch });
     const label = ch === 'all' ? `전체 (${n})` : `${ch}장 (${n})`;
     const cls = state.chapterFilter === ch ? 'filter-btn active' : 'filter-btn';
@@ -2864,7 +4844,7 @@ function renderFilters() {
 
   const typeBar = document.getElementById('type-filter');
   const typeItems = ['all', ...TYPE_ORDER];
-  typeBar.innerHTML = typeItems.map(type => {
+  typeBar.innerHTML = '<span class="mode-label">유형:</span>' + typeItems.map(type => {
     const n = filteredCount({ type });
     const label = type === 'all' ? `전체 유형 (${n})` : `${typeLabel(type)} (${n})`;
     const cls = state.typeFilter === type ? 'filter-btn active' : 'filter-btn';
@@ -2873,8 +4853,9 @@ function renderFilters() {
 
   sourceBar.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      if (hasProgress() && !confirm('자료 필터를 바꾸면 현재 답안이 사라집니다. 진행할까요?')) return;
+      if (hasProgress() && !confirm('시험 범위를 바꾸면 현재 답안이 사라집니다. 진행할까요?')) return;
       state.sourceFilter = btn.dataset.source;
+      state.chapterFilter = 'all';
       newRound();
     });
   });
@@ -2900,7 +4881,7 @@ function renderPoolInfo() {
   const bySource = (source) => POOL.filter(q => sourceMatches(q, source)).length;
   const byType = (type) => selected.filter(q => q.type === type).length;
   const sourceCounts = SOURCE_ORDER.map(source => `${SOURCE_LABEL[source]} ${bySource(source)}`).join(' / ');
-  info.textContent = `문제 풀: 전체 ${POOL.length}문제 (${sourceCounts}) · 현재 ${SOURCE_LABEL[state.sourceFilter]} ${selected.length}문제 (객관식 ${byType('choice')} / 복수선택 ${byType('multi')} / OX ${byType('ox')} / 단답형 ${byType('short')} / 서술형 ${byType('essay')})`;
+  info.textContent = `문제 풀: 전체 시험범위 ${bySource('all')}문제 (${sourceCounts}) · 현재 ${SOURCE_LABEL[state.sourceFilter]} ${selected.length}문제 (객관식 ${byType('choice')} / 복수선택 ${byType('multi')} / OX ${byType('ox')} / 단답형 ${byType('short')} / 서술형 ${byType('essay')})`;
 }
 
 function hasProgress() {
