@@ -11,11 +11,9 @@
 
 브라우저에서 `index.html`을 열면 바로 실행됩니다.
 
-## GitHub Pages
+## 공개 주소
 
-배포 주소:
-
-- `https://urusung.github.io/inha-database-quiz/`
+- GitHub Pages: `https://urusung.github.io/inha-database-quiz/`
 
 ## 구성
 
