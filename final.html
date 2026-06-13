@@ -263,6 +263,7 @@ footer { text-align: center; margin-top: 30px; font-size: 11px; color: #9ca3af; 
   </div>
 
   <div class="filter-bar" id="source-filter"></div>
+  <div class="filter-bar" id="material-filter"></div>
   <div class="filter-bar" id="chapter-filter"></div>
   <div class="filter-bar" id="type-filter"></div>
 
@@ -4332,6 +4333,8 @@ const POOL = [
 const TYPE_LABEL = { choice: '객관식', multi: '복수선택', ox: 'OX', short: '단답형', essay: '서술형' };
 const TYPE_ORDER = ['choice', 'multi', 'ox', 'short', 'essay'];
 const SOURCE_LABEL = { all: '전체 시험범위', final: '기말고사', past: '작년 기말 제보', query: '쿼리 암기', midterm: '중간고사' };
+const MATERIAL_LABEL = { all: '전체 자료', check: '체크문제', pdf: '강의·PDF', query: '쿼리 암기', past: '작년 제보' };
+const MATERIAL_ORDER = ['all', 'check', 'pdf', 'query', 'past'];
 const LOCKED_SOURCE = 'final';
 const SOURCE_ORDER = ['final'];
 const CHAPTERS = [...new Set(POOL.map(q => q.chapter))].sort((a, b) => Number(a) - Number(b));
@@ -4386,6 +4389,17 @@ function sourceMatches(q, source) {
   if (source === 'query') return q.bank === 'query';
   return false;
 }
+function isCheckQuestion(q) {
+  return String(q.source || '').startsWith('체크문제');
+}
+function materialMatches(q, material) {
+  if (material === 'all') return true;
+  if (material === 'check') return isCheckQuestion(q);
+  if (material === 'query') return q.bank === 'query';
+  if (material === 'past') return q.bank === 'past';
+  if (material === 'pdf') return !isCheckQuestion(q) && q.bank !== 'query' && q.bank !== 'past';
+  return false;
+}
 
 const state = {
   questions: [],
@@ -4393,26 +4407,29 @@ const state = {
   revealed: {},
   correct: {},
   sourceFilter: 'final',
+  materialFilter: 'all',
   chapterFilter: 'all',
   typeFilter: 'all',
   countMode: '20',
 };
 
-function filteredCount({ source = state.sourceFilter, chapter = state.chapterFilter, type = state.typeFilter } = {}) {
+function filteredCount({ source = state.sourceFilter, material = state.materialFilter, chapter = state.chapterFilter, type = state.typeFilter } = {}) {
   return POOL.filter(q => {
     const bySource = sourceMatches(q, source);
+    const byMaterial = materialMatches(q, material);
     const byChapter = chapter === 'all' || q.chapter === chapter;
     const byType = type === 'all' || q.type === type;
-    return bySource && byChapter && byType;
+    return bySource && byMaterial && byChapter && byType;
   }).length;
 }
 
 function currentPool() {
   return POOL.filter(q => {
     const bySource = sourceMatches(q, state.sourceFilter);
+    const byMaterial = materialMatches(q, state.materialFilter);
     const byChapter = state.chapterFilter === 'all' || q.chapter === state.chapterFilter;
     const byType = state.typeFilter === 'all' || q.type === state.typeFilter;
-    return bySource && byChapter && byType;
+    return bySource && byMaterial && byChapter && byType;
   });
 }
 
@@ -4833,6 +4850,15 @@ function renderFilters() {
     return `<button class="${cls}" data-source="${source}">${label}</button>`;
   }).join('');
 
+  const materialBar = document.getElementById('material-filter');
+  const materialItems = MATERIAL_ORDER.filter(material => filteredCount({ material }) > 0 || state.materialFilter === material);
+  materialBar.innerHTML = '<span class="mode-label">자료:</span>' + materialItems.map(material => {
+    const n = filteredCount({ material });
+    const label = `${MATERIAL_LABEL[material]} (${n})`;
+    const cls = state.materialFilter === material ? 'filter-btn active' : 'filter-btn';
+    return `<button class="${cls}" data-material="${material}">${label}</button>`;
+  }).join('');
+
   const chapterBar = document.getElementById('chapter-filter');
   const visibleChapters = CHAPTERS.filter(ch => filteredCount({ chapter: ch }) > 0 || state.chapterFilter === ch);
   const chapterItems = ['all', ...visibleChapters];
@@ -4860,6 +4886,14 @@ function renderFilters() {
       newRound();
     });
   });
+  materialBar.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (hasProgress() && !confirm('자료 필터를 바꾸면 현재 답안이 사라집니다. 진행할까요?')) return;
+      state.materialFilter = btn.dataset.material;
+      state.chapterFilter = 'all';
+      newRound();
+    });
+  });
   chapterBar.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (hasProgress() && !confirm('필터를 바꾸면 현재 답안이 사라집니다. 진행할까요?')) return;
@@ -4882,7 +4916,8 @@ function renderPoolInfo() {
   const bySource = (source) => POOL.filter(q => sourceMatches(q, source)).length;
   const byType = (type) => selected.filter(q => q.type === type).length;
   const sourceCounts = SOURCE_ORDER.map(source => `${SOURCE_LABEL[source]} ${bySource(source)}`).join(' / ');
-  info.textContent = `문제 풀: 전체 시험범위 ${bySource('all')}문제 (${sourceCounts}) · 현재 ${SOURCE_LABEL[state.sourceFilter]} ${selected.length}문제 (객관식 ${byType('choice')} / 복수선택 ${byType('multi')} / OX ${byType('ox')} / 단답형 ${byType('short')} / 서술형 ${byType('essay')})`;
+  const materialText = state.materialFilter === 'all' ? '' : ` · 자료 ${MATERIAL_LABEL[state.materialFilter]}`;
+  info.textContent = `문제 풀: 전체 시험범위 ${bySource('all')}문제 (${sourceCounts}) · 현재 ${SOURCE_LABEL[state.sourceFilter]} ${selected.length}문제${materialText} (객관식 ${byType('choice')} / 복수선택 ${byType('multi')} / OX ${byType('ox')} / 단답형 ${byType('short')} / 서술형 ${byType('essay')})`;
 }
 
 function hasProgress() {
